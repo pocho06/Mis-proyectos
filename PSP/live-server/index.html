@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Gestión comercial de PSP Seguros">
+  <title>PSP | Gestión de Seguros</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin-desktop.css">
+  <link rel="stylesheet" href="auth-guard.css">
+  <link rel="stylesheet" href="admin-sidebar-scroll.css">
+  <link rel="stylesheet" href="insurance-choices.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="psp-supabase.js"></script>
+  <script src="auth-guard.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="admin-help.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand"><span class="brand-mark">P</span><div><strong>PSP</strong><small>SEGUROS</small></div><button class="mobile-close" data-action="menu" aria-label="Cerrar menú">×</button></div>
+    <p>GESTIÓN</p>
+    <nav aria-label="Navegación principal">
+      <button class="nav-link active" data-view="resumen"><span>▦</span>Resumen</button>
+      <button class="nav-link" data-view="ventas"><span>↗</span>Ventas <b class="badge" id="salesBadge">5</b></button>
+      <button data-action="new"><span>＋</span>Nueva solicitud <b class="new">Nuevo</b></button>
+      <button class="nav-link" data-view="clientes"><span>♙</span>Clientes</button>
+    </nav>
+    <p>EQUIPO</p>
+    <nav>
+      <button class="nav-link" data-view="vendedores"><span>♧</span>Vendedores</button>
+      <button class="nav-link" data-view="rendimiento"><span>⌁</span>Rendimiento</button>
+      <button class="nav-link" data-view="reportes"><span>▥</span>Reportes</button>
+    </nav>
+    <div class="help"><span>?</span><strong>¿Necesitás ayuda?</strong><small>Conocé cómo usar el panel</small><button data-action="guide">Ver guía</button></div>
+    <button class="profile" data-action="profile"><span>DMP</span><div><strong>Diego Martin Poccioni</strong><small>Administrador</small></div><b>⋮</b></button>
+  </aside>
+
+  <main>
+    <header>
+      <button class="menu" data-action="menu" aria-label="Abrir menú">☰</button>
+      <label class="search"><span>⌕</span><input id="globalSearch" placeholder="Buscar clientes, pólizas..." aria-label="Buscar"><kbd>Ctrl K</kbd></label>
+      <div class="header-actions"><button data-action="notifications" class="notification" aria-label="Notificaciones">♢<i></i></button><button class="avatar" data-action="profile">DMP</button></div>
+    </header>
+
+    <div class="page">
+      <section class="view active" id="resumen">
+        <div class="title"><div><p>JUEVES, 16 DE JULIO</p><h1>Buenos días, Diego 👋</h1><small>Este es el resumen de la actividad de tu equipo.</small></div><button class="primary" data-action="new">＋ Nueva solicitud</button></div>
+        <div class="metrics">
+          <article><i class="blue">↗</i><em>Datos reales</em><p>Ventas este mes</p><h2 id="metricSales">0</h2><small>Pólizas emitidas</small></article>
+          <article><i class="green">$</i><em>Datos reales</em><p>Prima total</p><h2 id="metricAmount">$ 0</h2><small>Producción del equipo</small></article>
+          <article><i class="orange">◷</i><em class="warn">Revisar</em><p>Solicitudes pendientes</p><h2 id="metricPending">0</h2><small>Requieren tu atención</small></article>
+          <article><i class="purple">♧</i><em>↗ 2</em><p>Vendedores activos</p><h2 id="metricSellers">0</h2><small>Vendedores habilitados</small></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel chart-panel"><div class="panel-head"><div><h3>Rendimiento de ventas</h3><p>Ventas generadas en los últimos 6 meses</p></div><select id="chartPeriod"><option value="6">Últimos 6 meses</option><option value="3">Últimos 3 meses</option></select></div><div class="chart" id="chart"></div><footer><span>■ Ventas realizadas</span><b>Promedio mensual: <strong id="average">44 ventas</strong></b></footer></article>
+          <article class="panel"><div class="panel-head"><div><h3>Top vendedores</h3><p>Rendimiento del mes actual</p></div><button class="link nav-link" data-view="vendedores">Ver todos →</button></div><div id="topSellers"></div></article>
+        </div>
+        <article class="panel table-panel"><div class="panel-head"><div><h3>Solicitudes recientes</h3><p>Últimas solicitudes ingresadas por el equipo</p></div><button class="link nav-link" data-view="ventas">Ver todas →</button></div><div class="table-wrap"><table><thead><tr><th>CLIENTE</th><th>SEGURO</th><th>VENDEDOR</th><th>FECHA</th><th>PRIMA</th><th>ESTADO</th><th></th></tr></thead><tbody id="recentRows"></tbody></table></div></article>
+      </section>
+
+      <section class="view" id="ventas"><div class="title"><div><p>GESTIÓN COMERCIAL</p><h1>Ventas y solicitudes</h1><small>Consultá, filtrá y actualizá todas las solicitudes.</small></div><button class="primary" data-action="new">＋ Nueva solicitud</button></div><article class="panel"><div class="toolbar"><label>⌕ <input id="salesSearch" placeholder="Buscar cliente, póliza o vendedor"></label><select id="statusFilter"><option value="Todos">Todos los estados</option><option>Pendiente</option><option>En proceso</option><option>Requiere corrección</option><option>Emitida</option><option>Rechazada</option></select><button id="exportBtn">⇩ Exportar CSV</button></div><div class="table-wrap"><table><thead><tr><th>CLIENTE</th><th>SEGURO</th><th>VENDEDOR</th><th>FECHA</th><th>PRIMA</th><th>ESTADO</th><th></th></tr></thead><tbody id="salesRows"></tbody></table></div><p class="empty" id="salesEmpty">No encontramos solicitudes con esos datos.</p></article></section>
+
+      <section class="view" id="clientes"><div class="title"><div><p>BASE COMERCIAL</p><h1>Clientes</h1><small>Información consolidada de asegurados.</small></div><button class="secondary" data-action="new">＋ Agregar cliente</button></div><div class="cards" id="clientCards"></div></section>
+      <section class="view" id="vendedores"><div class="title"><div><p>EQUIPO PSP</p><h1>Vendedores</h1><small>Producción y cumplimiento de objetivos.</small></div><button class="secondary" data-action="invite">＋ Invitar vendedor</button></div><div class="seller-grid" id="sellerCards"></div></section>
+      <section class="view" id="rendimiento"><div class="title"><div><p>ANÁLISIS</p><h1>Rendimiento</h1><small>Comparativa mensual del equipo de ventas.</small></div><select class="period"><option>Julio 2026</option><option>Junio 2026</option></select></div><div class="performance-grid" id="performanceGrid"></div></section>
+      <section class="view" id="reportes"><div class="title"><div><p>DOCUMENTOS</p><h1>Reportes</h1><small>Descargá información lista para compartir.</small></div></div><div class="report-grid"><article><span>▥</span><div><h3>Producción mensual</h3><p>Detalle de pólizas y primas del mes.</p></div><button data-report="produccion">Descargar CSV</button></article><article><span>♧</span><div><h3>Rendimiento por vendedor</h3><p>Ventas y objetivos del equipo.</p></div><button data-report="vendedores">Descargar CSV</button></article><article><span>◷</span><div><h3>Solicitudes pendientes</h3><p>Casos que requieren seguimiento.</p></div><button data-report="pendientes">Descargar CSV</button></article></div></section>
+    </div>
+  </main>
+</div>
+
+<div class="overlay" id="overlay" hidden>
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-head"><div><small id="modalEyebrow">NUEVA SOLICITUD</small><h2 id="modalTitle">Datos del asegurado</h2><p id="modalDescription">Completá la información para que administración emita la póliza.</p></div><button data-action="close" aria-label="Cerrar">×</button></div>
+    <div id="modalBody">
+      <form id="saleForm"><div class="form-grid"><label>Nombre completo<input name="client_name" required placeholder="Apellido y nombre"></label><label>DNI del cliente<input name="document" inputmode="numeric" required placeholder="Ej. 32456789"></label><label>Fecha de nacimiento<input name="birth_date" type="date" required></label><label>Teléfono móvil<input name="client_phone" required placeholder="+54 9..."></label><label>Correo electrónico<input name="client_email" type="email" required placeholder="cliente@email.com"></label><label class="wide">Domicilio completo<input name="postal_address" required placeholder="Calle, número y localidad"></label><label>Provincia<input name="province" required placeholder="Ej. Buenos Aires"></label><label>Localidad<input name="locality" required placeholder="Ej. San Isidro"></label><div class="wide"><strong>¿Qué seguro desea?</strong><select name="type" class="insurance-native" aria-label="Seguro seleccionado"><option value="">Seleccionar</option><option>Seguro de vehículo</option><option>Moto</option><option>Vida</option><option>Vida ART 90 y Sepelio</option><option>Otro</option></select><div class="insurance-choices"><label><input type="radio" name="admin_insurance_choice" value="Seguro de vehículo">Seguro de vehículo</label><label><input type="radio" name="admin_insurance_choice" value="Moto">Moto</label><label><input type="radio" name="admin_insurance_choice" value="Vida">Vida</label><label><input type="radio" name="admin_insurance_choice" value="Vida ART 90 y Sepelio">Vida ART 90 y Sepelio</label><label><input type="radio" name="admin_insurance_choice" value="Otro">Otro</label></div></div><label>Vendedor<select name="seller_id" id="adminSeller" required><option value="">Cargando vendedores...</option></select></label><label>Monto estimado<input name="amount" type="number" min="1" step="0.01" required placeholder="$ 0"></label><div class="wide life-fields" hidden><div class="form-grid"><label>Suma asegurada<select name="coverage_amount" id="adminLifeCoverage"><option value="">Seleccionar</option><option value="2000000">$ 2.000.000</option><option value="4000000">$ 4.000.000</option><option value="10000000">$ 10.000.000</option></select></label><label>Cuota mensual<input name="monthly_premium" id="adminLifePremium" type="number" min="1" step="0.01" placeholder="$ 0"></label><label>Adicional de sepelio<select name="funeral_option"><option value="">Seleccionar</option><option>Sí, agregar</option><option>No por ahora</option><option>Ya posee uno</option></select></label><label>Medio de pago<select name="payment_method"><option value="">Seleccionar</option><option>Tarjeta de crédito</option><option>Mercado Pago</option><option>CBU / débito</option></select></label><label>Últimos 4 dígitos<input name="payment_reference" inputmode="numeric" maxlength="4" placeholder="1234"></label><label class="wide">Enfermedades preexistentes<textarea name="preexisting_conditions" placeholder="Indicá ninguna o describí brevemente"></textarea></label><label class="wide">Beneficiarios<textarea name="beneficiary_details" placeholder="Nombre, DNI, parentesco y % de participación. Una persona por línea."></textarea></label><label class="wide"><input name="accepted_declaration" type="checkbox"> Declaro que los datos son correctos y autorizo el envío de la solicitud.</label></div></div><div class="wide vehicle-fields" hidden><div class="form-grid"><label>Año del vehículo<input name="vehicle_year" type="number" min="1900" max="2100" placeholder="2020"></label><label>Código postal<input name="postal_code" maxlength="10" placeholder="5000"></label><label class="auto-only">Uso del vehículo<select name="vehicle_use"><option value="">Seleccionar</option><option>Particular</option><option>Remis</option></select></label><label class="auto-only">¿Tiene GNC?<select name="has_gnc"><option value="">Seleccionar</option><option value="true">Sí</option><option value="false">No</option></select></label><label class="wide">Foto de la tarjeta del vehículo<input name="vehicle_card" type="file" accept="image/jpeg,image/png,image/webp,application/pdf"></label><small class="wide">Formatos JPG, PNG, WebP o PDF. Máximo 5 MB.</small></div></div></div><footer><button type="button" class="secondary" data-action="close">Cancelar</button><button class="primary" type="submit">Guardar solicitud →</button></footer></form>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" role="status" hidden><b>✓</b><div><strong id="toastTitle">Listo</strong><small id="toastText">La acción se completó correctamente.</small></div></div>
+</body>
+</html>

@@ -38,6 +38,14 @@ Aplicación de seguimiento de entrenamiento, nutrición, hábitos, objetivos y l
 - Carpeta: [`Trackfit`](./Trackfit/)
 - Entrada principal: [`Trackfit/index.html`](./Trackfit/index.html)
 - Configuración de la base: [`Trackfit/database/README.md`](./Trackfit/database/README.md)
+### PSP
+
+Plataforma de gestión y venta de seguros con paneles para administración y vendedores, flujos de cotización, autenticación y persistencia mediante Supabase.
+
+- Tecnologías: React, TypeScript, Next.js/Vinext, Supabase, Drizzle y Cloudflare.
+- Carpeta: [`PSP`](./PSP/)
+- Documentación: [`PSP/README.md`](./PSP/README.md)
+- Interfaz independiente: [`PSP/live-server/index.html`](./PSP/live-server/index.html)
 
 ## Uso
 

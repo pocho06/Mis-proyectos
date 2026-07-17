@@ -1,0 +1,66 @@
+/* Ajustes de legibilidad exclusivos para pantallas de computadora */
+@media (min-width: 721px) {
+  body { font-size: 16px; }
+
+  .sidebar { width: 276px; padding: 34px 24px 24px; }
+  main { margin-left: 276px; }
+  .brand strong { font-size: 32px; }
+  .brand small { font-size: 10px; }
+  .workspace small { font-size: 10px; }
+  .workspace strong { font-size: 13px; }
+  nav p { font-size: 11px; }
+  nav a { height: 50px; font-size: 14px; }
+  nav a > span { font-size: 20px; }
+  nav a b { font-size: 10px; }
+  .help strong { font-size: 13px; }
+  .help small { font-size: 11px; }
+  .help button { font-size: 11px; }
+  .profile strong, .header-user strong { font-size: 13px; }
+  .profile small, .header-user small { font-size: 11px; }
+
+  header { height: 78px; }
+  .crumb { font-size: 12px; }
+  .page { max-width: 1500px; padding: 43px 48px 68px; }
+  .welcome p { font-size: 11px; }
+  .welcome h1 { font-size: 33px; }
+  .welcome small { font-size: 14px; }
+  .goal { width: 350px; }
+  .goal > div { font-size: 11px; }
+  .goal > b { font-size: 12px; }
+
+  .layout { grid-template-columns: minmax(650px, 1.75fr) minmax(350px, .8fr); gap: 26px; }
+  .card-head h2 { font-size: 22px; }
+  .card-head p { font-size: 13px; }
+  .card-head small, .tips > small { font-size: 10px; }
+  legend { font-size: 14px; }
+  legend span { font-size: 12px; }
+  .fields label { font-size: 13px; }
+  .input { height: 52px; }
+  .input input, .input select { font-size: 14px; }
+  .input em { font-size: 11px; }
+  .fields label > small { font-size: 10px; }
+  form footer small { font-size: 10px; }
+  form footer button { padding: 13px 21px; font-size: 12px; }
+
+  .mini-head h3 { font-size: 16px; }
+  .mini-head p { font-size: 11px; }
+  .mini-head button { font-size: 11px; }
+  .stats span { font-size: 10px; }
+  .stats strong { font-size: 29px; }
+  .stats small { font-size: 9px; }
+  .pending strong { font-size: 11px; }
+  .pending small { font-size: 9px; }
+  .pending > b { font-size: 10px; }
+  .tips h3 { font-size: 16px; }
+  .tips li { font-size: 11px; }
+  .request strong { font-size: 11px; }
+  .request small { font-size: 9px; }
+  .request > b { font-size: 9px; }
+}
+
+@media (min-width: 721px) and (max-width: 1150px) {
+  .sidebar { width: 238px; }
+  main { margin-left: 238px; }
+  .page { padding-left: 32px; padding-right: 32px; }
+  .layout { grid-template-columns: 1fr; }
+}

@@ -1,0 +1,35 @@
+/* Evita que el perfil inferior quede cortado en pantallas de poca altura */
+.sidebar {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd9e3 transparent;
+}
+
+.sidebar::-webkit-scrollbar { width: 5px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: #cbd9e3; border-radius: 10px; }
+.sidebar .help, .sidebar .profile { flex-shrink: 0; }
+.sidebar .profile { padding-bottom: 12px; }
+
+@media (max-height: 820px) and (min-width: 981px) {
+  .sidebar { padding-top: 22px; }
+  .brand { padding-bottom: 19px; }
+  .workspace { margin-bottom: 9px; }
+  nav p { margin-top: 12px; }
+  nav a { height: 42px; }
+  .help { padding: 12px; }
+  .help > i { display: none; }
+  .profile { margin-top: 11px; padding-top: 12px; }
+}
+
+@media (max-width: 980px) {
+  .sidebar {
+    height: 100dvh;
+    max-height: 100dvh;
+    padding-bottom: 30px !important;
+  }
+  .sidebar .help { margin-top: 24px; }
+  .sidebar .profile { margin-bottom: 6px; }
+}

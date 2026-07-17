@@ -1,0 +1,66 @@
+/* Corrección para notebooks, ventanas angostas y tablets */
+.seller-menu-button,.seller-menu-backdrop{display:none}
+
+@media (max-width: 980px) {
+  body{overflow-x:hidden}
+  .sidebar{
+    display:flex!important;
+    width:280px!important;
+    padding:28px 20px 20px!important;
+    transform:translateX(-105%);
+    transition:transform .24s ease;
+    box-shadow:14px 0 45px rgba(13,35,56,.22);
+    z-index:80;
+  }
+  .sidebar.menu-open{transform:translateX(0)}
+  main{margin-left:0!important;width:100%!important;min-width:0}
+  header{height:68px!important;padding:0 20px!important}
+  .mobile-logo{display:block!important;font-size:22px!important}
+  .crumb{display:none!important}
+  .header-user>div{display:none!important}
+  .seller-menu-button{
+    display:grid;
+    place-items:center;
+    width:38px;
+    height:38px;
+    margin-right:10px;
+    border:1px solid #dce5ec;
+    border-radius:9px;
+    background:#fff;
+    color:#086aa6;
+    font-size:19px;
+    cursor:pointer;
+  }
+  .seller-menu-backdrop{
+    position:fixed;
+    inset:0;
+    z-index:70;
+    background:rgba(9,29,48,.4);
+    backdrop-filter:blur(2px);
+  }
+  .seller-menu-backdrop.show{display:block}
+  .page{width:100%;max-width:none!important;padding:28px 22px 50px!important}
+  .welcome{margin-bottom:24px}
+  .welcome h1{font-size:27px!important}
+  .welcome small{font-size:12px!important}
+  .goal{display:none!important}
+  .layout{display:block!important;min-width:0}
+  .form-card{width:100%;min-width:0}
+  .right{display:grid!important;grid-template-columns:1fr 1fr!important;margin-top:18px;gap:16px!important}
+  .recent{grid-column:1/-1!important}
+}
+
+@media (max-width: 620px) {
+  header{padding:0 15px!important}
+  .page{padding:22px 14px 42px!important}
+  .welcome h1{font-size:24px!important}
+  .fields{grid-template-columns:1fr!important}
+  .fields .full{grid-column:auto!important}
+  .right{grid-template-columns:1fr!important}
+  .recent{grid-column:auto!important}
+  .card-head{padding:21px 17px 18px!important}
+  form{padding-left:17px!important;padding-right:17px!important}
+  form footer{margin-left:-17px!important;margin-right:-17px!important;padding-left:17px!important;padding-right:17px!important}
+  form footer>div{display:none!important}
+  form footer{justify-content:flex-end!important}
+}

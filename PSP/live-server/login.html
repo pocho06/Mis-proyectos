@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Acceso al sistema de gestión de PSP Seguros">
+  <title>Ingresar | PSP Seguros</title>
+  <link rel="stylesheet" href="login.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="psp-supabase.js"></script>
+  <script src="login.js" defer></script>
+</head>
+<body>
+  <main class="login-shell">
+    <section class="brand-panel">
+      <div class="brand"><span>P</span><div><strong>PSP</strong><small>SEGUROS</small></div></div>
+      <div class="brand-copy"><span>GESTIÓN COMERCIAL</span><h1>Todo tu equipo,<br>en un mismo lugar.</h1><p>Solicitudes, ventas y seguimiento de seguros con información segura y organizada.</p></div>
+      <div class="brand-points"><div><i>✓</i><span><b>Información centralizada</b><small>Sin datos perdidos en conversaciones.</small></span></div><div><i>✓</i><span><b>Acceso según el rol</b><small>Cada usuario ve solamente lo necesario.</small></span></div><div><i>✓</i><span><b>Protección de datos</b><small>Permisos aplicados desde la base de datos.</small></span></div></div>
+      <footer>© 2026 PSP Seguros</footer>
+    </section>
+    <section class="form-panel">
+      <div class="mobile-brand"><span>P</span><strong>PSP</strong></div>
+      <div class="login-card">
+        <div class="eyebrow">ACCESO AL SISTEMA</div>
+        <h2>Bienvenido</h2>
+        <p>Ingresá con los datos de tu cuenta para continuar.</p>
+        <form id="loginForm">
+          <label>Correo electrónico<div class="field"><span>@</span><input id="email" type="email" autocomplete="email" placeholder="nombre@empresa.com" required></div></label>
+          <label>Contraseña<div class="field"><span>◇</span><input id="password" type="password" autocomplete="current-password" placeholder="Ingresá tu contraseña" required><button id="togglePassword" type="button" aria-label="Mostrar contraseña">◉</button></div></label>
+          <div class="form-options"><label class="remember"><input id="remember" type="checkbox" checked><span>Recordar mi sesión</span></label><button id="forgotPassword" type="button">Olvidé mi contraseña</button></div>
+          <div class="login-message" id="loginMessage" role="alert" hidden></div>
+          <button class="submit" id="submitButton" type="submit"><span>Ingresar</span><b>→</b></button>
+        </form>
+        <div class="security"><span>◆</span><p>Acceso protegido. Si todavía no tenés una cuenta, solicitála al administrador.</p></div>
+      </div>
+      <small class="support">¿Necesitás ayuda? Contactá a administración de PSP.</small>
+    </section>
+  </main>
+</body>
+</html>
