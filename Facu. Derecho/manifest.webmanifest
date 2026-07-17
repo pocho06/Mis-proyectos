@@ -1,0 +1,57 @@
+﻿{
+  "id": "/",
+  "name": "Libertad y Cambio",
+  "short_name": "LyC",
+  "description": "Pagina de Libertad y Cambio con biblioteca, propuestas y consulta de votacion.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui", "browser"],
+  "orientation": "portrait-primary", 
+  "background_color": "#050505",
+  "theme_color": "#f4b31b",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "imagen/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "imagen/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Consultar donde voto",
+      "short_name": "Donde voto",
+      "description": "Abrir la consulta de padron.",
+      "url": "./donde-voto.html",
+      "icons": [
+        {
+          "src": "imagen/app-icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Ver propuestas",
+      "short_name": "Propuestas",
+      "description": "Abrir las propuestas de Libertad y Cambio.",
+      "url": "./#propuestas",
+      "icons": [
+        {
+          "src": "imagen/app-icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4b31b">
+  <title>Libertad y Cambio | Biblioteca</title>
+  <link rel="icon" type="image/png" href="imagen/favicon-libertad-cambio.png">
+  <link rel="apple-touch-icon" href="imagen/app-icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="prototype-page library-page">
+    <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+
+    <header class="library-header">
+      <a class="brand" href="index.html#top" aria-label="Volver al inicio">
+        <img class="brand-logo" src="imagen/logo-libertad-cambio-nuevo-recortado.png" alt="Logo de Libertad y Cambio">
+      </a>
+
+      <nav class="library-nav" aria-label="Navegacion de biblioteca">
+        <a class="library-back" href="index.html#top">Volver al inicio</a>
+        <a class="library-back library-back-soft" href="donde-voto.html">Dónde voto</a>
+        <a class="library-back library-back-soft" href="admin.html" data-admin-only hidden>Admin</a>
+        <button class="login-button" type="button" data-login-button>Iniciar sesión</button>
+      </nav>
+    </header>
+
+    <section class="content-section library-hero">
+      <div>
+        <span class="section-label">Biblioteca</span>
+        <h1>Aula virtual</h1>
+        <p>
+          Un espacio para ordenar material de estudio, apuntes, códigos y recursos útiles por año.
+          Para entrar, validamos tu DNI con el padrón de estudiantes.
+        </p>
+
+        <div class="library-search" data-auth-content hidden>
+          <label for="library-search">Buscar en biblioteca</label>
+          <input id="library-search" type="search" placeholder="Ej: Historia A, Código Civil, optativas..." data-library-search>
+        </div>
+      </div>
+
+      <div class="library-card library-status-card">
+        <img src="imagen/favicon-libertad-cambio.png" alt="" loading="lazy" decoding="async">
+        <h2>Acceso con DNI</h2>
+        <p>
+          La biblioteca se desbloquea con tu DNI y la sesión dura hasta que cierres la página.
+        </p>
+      </div>
+    </section>
+
+    <section class="content-section library-gate" data-auth-gate>
+      <div class="library-gate-card">
+        <span class="section-label">Acceso estudiantes</span>
+        <h2>Ingresá con tu DNI</h2>
+        <p>
+          Para entrar a la biblioteca usamos el padrón de estudiantes. Ingresá tu DNI una vez y vas a
+          poder consultar el aula virtual durante esta sesión.
+        </p>
+        <button class="hero-button section-button" type="button" data-login-gate-button>Iniciar sesión</button>
+      </div>
+    </section>
+
+    <section class="content-section library-content" aria-label="Contenido de biblioteca" data-auth-content hidden>
+      <div class="library-menu" aria-label="Opciones de biblioteca">
+        <div>
+          <span class="section-label">Elegí una opción</span>
+          <h2>Buscá por año, optativas o recursos</h2>
+        </div>
+
+        <div class="library-option-grid">
+          <button class="library-option" type="button" data-library-target="year-1">1° año</button>
+          <button class="library-option" type="button" data-library-target="year-2">2° año</button>
+          <button class="library-option" type="button" data-library-target="year-3">3° año</button>
+          <button class="library-option" type="button" data-library-target="year-4">4° año</button>
+          <button class="library-option" type="button" data-library-target="year-5">5° año</button>
+          <button class="library-option" type="button" data-library-target="year-6">6° año</button>
+          <button class="library-option library-option-wide" type="button" data-library-target="optativas">Optativas</button>
+          <button class="library-option library-option-wide" type="button" data-library-target="recursos">Recursos</button>
+        </div>
+      </div>
+
+      <div class="library-grid" data-library-grid>
+        <article class="library-resource" id="year-1" data-library-card data-library-category="years" data-library-section="year-1">
+          <div class="library-resource-head">
+            <span>1° año</span>
+            <strong>Materias base</strong>
+          </div>
+
+          <div class="library-columns">
+            <div>
+              <h3>Primer cuatrimestre</h3>
+              <ul class="library-list">
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Historia A</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="historia-a"></div>
+                </li>
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Historia B</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="historia-b"></div>
+                </li>
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Contenidos Transversales</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="contenidos-transversales"></div>
+                </li>
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Destrezas I</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="destrezas-i"></div>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3>Segundo cuatrimestre</h3>
+              <ul class="library-list">
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Historia en Teoría del Estado A</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="historia-estado-a"></div>
+                </li>
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Historia en Teoría del Estado B</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="historia-estado-b"></div>
+                </li>
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Teoría del Derecho y de la Justicia A</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="teoria-derecho-justicia-a"></div>
+                </li>
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Teoría del Derecho y de la Justicia B</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="teoria-derecho-justicia-b"></div>
+                </li>
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Economía</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="economia"></div>
+                </li>
+                <li data-library-item>
+                  <div class="library-item-main">
+                    <strong>Nociones Económicas</strong>
+                    <span data-material-count>Material pendiente</span>
+                  </div>
+                  <div class="library-material-slot" data-material-target="nociones-economicas"></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="library-resource" id="year-2" data-library-card data-library-category="years" data-library-section="year-2">
+          <div class="library-resource-head">
+            <span>2° año</span>
+            <strong>Próximamente</strong>
+          </div>
+          <p>Este bloque queda reservado para cargar materias, apuntes y archivos de segundo año.</p>
+          <div class="library-material-slot library-section-slot" data-material-target="year-2"></div>
+        </article>
+
+        <article class="library-resource" id="year-3" data-library-card data-library-category="years" data-library-section="year-3">
+          <div class="library-resource-head">
+            <span>3° año</span>
+            <strong>Próximamente</strong>
+          </div>
+          <p>Este bloque queda reservado para cargar materias, apuntes y archivos de tercer año.</p>
+          <div class="library-material-slot library-section-slot" data-material-target="year-3"></div>
+        </article>
+
+        <article class="library-resource" id="year-4" data-library-card data-library-category="years" data-library-section="year-4">
+          <div class="library-resource-head">
+            <span>4° año</span>
+            <strong>Próximamente</strong>
+          </div>
+          <p>Este bloque queda reservado para cargar materias, apuntes y archivos de cuarto año.</p>
+          <div class="library-material-slot library-section-slot" data-material-target="year-4"></div>
+        </article>
+
+        <article class="library-resource" id="year-5" data-library-card data-library-category="years" data-library-section="year-5">
+          <div class="library-resource-head">
+            <span>5° año</span>
+            <strong>Próximamente</strong>
+          </div>
+          <p>Este bloque queda reservado para cargar materias, apuntes y archivos de quinto año.</p>
+          <div class="library-material-slot library-section-slot" data-material-target="year-5"></div>
+        </article>
+
+        <article class="library-resource" id="year-6" data-library-card data-library-category="years" data-library-section="year-6">
+          <div class="library-resource-head">
+            <span>6° año</span>
+            <strong>Próximamente</strong>
+          </div>
+          <p>Este bloque queda reservado para cargar materias, apuntes y archivos de sexto año.</p>
+          <div class="library-material-slot library-section-slot" data-material-target="year-6"></div>
+        </article>
+
+        <article class="library-resource" id="optativas" data-library-card data-library-category="optativas" data-library-section="optativas">
+          <div class="library-resource-head">
+            <span>Optativas</span>
+            <strong>Bloques</strong>
+          </div>
+          <ul class="library-list">
+            <li data-library-item>
+              <div class="library-item-main">
+                <strong>Optativas Primer Bloque</strong>
+                <span data-material-count>Material pendiente</span>
+              </div>
+              <div class="library-material-slot" data-material-target="optativas-primer-bloque"></div>
+            </li>
+            <li data-library-item>
+              <div class="library-item-main">
+                <strong>Optativas Segundo Bloque</strong>
+                <span data-material-count>Material pendiente</span>
+              </div>
+              <div class="library-material-slot" data-material-target="optativas-segundo-bloque"></div>
+            </li>
+            <li data-library-item>
+              <div class="library-item-main">
+                <strong>Optativas 3</strong>
+                <span data-material-count>Material pendiente</span>
+              </div>
+              <div class="library-material-slot" data-material-target="optativas-3"></div>
+            </li>
+            <li data-library-item>
+              <div class="library-item-main">
+                <strong>Optativas 4</strong>
+                <span data-material-count>Material pendiente</span>
+              </div>
+              <div class="library-material-slot" data-material-target="optativas-4"></div>
+            </li>
+            <li data-library-item>
+              <div class="library-item-main">
+                <strong>Optativas 5</strong>
+                <span data-material-count>Material pendiente</span>
+              </div>
+              <div class="library-material-slot" data-material-target="optativas-5"></div>
+            </li>
+          </ul>
+        </article>
+
+        <article class="library-resource" id="recursos" data-library-card data-library-category="recursos" data-library-section="recursos">
+          <div class="library-resource-head">
+            <span>Recursos</span>
+            <strong>Documentos importantes</strong>
+          </div>
+          <ul class="library-list">
+            <li data-library-item>
+              <div class="library-item-main">
+                <strong>Plan de estudio</strong>
+                <span data-material-count>Archivo pendiente</span>
+              </div>
+              <div class="library-material-slot" data-material-target="plan-estudio"></div>
+            </li>
+            <li data-library-item>
+              <div class="library-item-main">
+                <strong>Código Civil</strong>
+                <span data-material-count>Archivo pendiente</span>
+              </div>
+              <div class="library-material-slot" data-material-target="codigo-civil"></div>
+            </li>
+            <li data-library-item>
+              <div class="library-item-main">
+                <strong>Constitución</strong>
+                <span data-material-count>Archivo pendiente</span>
+              </div>
+              <div class="library-material-slot" data-material-target="constitucion"></div>
+            </li>
+          </ul>
+        </article>
+      </div>
+
+      <p class="library-empty" data-library-empty hidden>No encontramos resultados con esa búsqueda.</p>
+    </section>
+  </main>
+
+  <div class="login-overlay" data-login-modal hidden>
+    <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <button class="login-close" type="button" aria-label="Cerrar inicio de sesión" data-login-close>&times;</button>
+      <p class="login-kicker" data-login-kicker>Acceso estudiantes</p>
+      <h2 id="login-title" data-login-title>Ingresar DNI</h2>
+      <p class="login-copy" data-login-copy>
+        Usá tu DNI sin puntos ni espacios para entrar a la biblioteca.
+      </p>
+      <div class="login-mode-switch" aria-label="Tipo de acceso">
+        <button class="is-active" type="button" data-login-mode-option="student">Estudiante</button>
+        <button type="button" data-login-mode-option="admin">Administrador</button>
+      </div>
+
+      <form class="login-form" data-login-form>
+        <label for="login-dni" data-login-label>DNI</label>
+        <input id="login-dni" name="dni" type="text" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="12345678" data-login-dni>
+        <button type="submit">Entrar</button>
+        <p class="login-status" data-login-status></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+

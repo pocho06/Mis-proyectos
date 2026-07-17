@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tienda – Barber Studio Pro</title>
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter','ui-sans-serif','system-ui'],
+            display: ['Poppins','Inter','ui-sans-serif'],
+          },
+          colors: {
+            base: '#050814',
+            card: '#0b101d',
+            brand: '#f97316',
+            accent: '#22c55e',
+          },
+          boxShadow: {
+            soft: '0 18px 60px rgba(15,23,42,0.6)',
+          },
+          borderRadius: {
+            '2xl': '1.25rem',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Tus estilos extra -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-base text-white font-sans">
+
+  <!-- Fondo decorativo -->
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <div class="absolute -top-40 -left-40 h-96 w-96 bg-brand/20 blur-3xl rounded-full"></div>
+    <div class="absolute top-40 -right-32 h-80 w-80 bg-accent/20 blur-3xl rounded-full"></div>
+    <div class="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-black/40 pointer-events-none"></div>
+  </div>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-30 backdrop-blur bg-black/40 border-b border-white/5">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between gap-4">
+      <a href="index.html#inicio" class="flex items-center gap-3">
+        <div class="h-9 w-9 rounded-2xl flex items-center justify-center bg-gradient-to-br from-brand to-amber-500 shadow-soft">
+          <span class="text-xl">💈</span>
+        </div>
+        <div class="leading-tight">
+          <div class="font-display text-lg font-bold tracking-tight">Barber Studio Pro</div>
+          <div class="text-xs text-white/60">Tienda de productos</div>
+        </div>
+      </a>
+
+      <!-- Menú desktop -->
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="index.html#inicio" class="nav-link">Inicio</a>
+        <a href="index.html#servicios" class="nav-link">Servicios</a>
+        <a href="index.html#reservas" class="nav-link">Reservas</a>
+        <a href="tienda.html" class="nav-link font-semibold text-white">Tienda</a>
+      </nav>
+
+      <!-- Botón carrito mini -->
+      <button
+        id="btnMiniCart"
+        class="hidden md:inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-black/40 px-3 py-1.5 text-xs"
+      >
+        <span>Carrito</span>
+        <span id="miniCartCount" class="px-1.5 rounded-full bg-brand text-xs font-semibold">0</span>
+      </button>
+
+      <!-- Menú móvil -->
+      <button
+        id="btnMenu"
+        class="md:hidden inline-flex items-center justify-center rounded-xl border border-white/20 px-3 py-2 text-sm"
+        aria-label="Abrir menú"
+      >
+        <span id="iconMenu">☰</span>
+      </button>
+    </div>
+
+    <!-- Menú móvil -->
+    <nav id="menuMovil" class="md:hidden hidden border-t border-white/10 bg-black/60 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4 py-3 flex flex-col gap-2 text-sm">
+        <a href="index.html#inicio" class="nav-link-mobile">Inicio</a>
+        <a href="index.html#servicios" class="nav-link-mobile">Servicios</a>
+        <a href="index.html#reservas" class="nav-link-mobile">Reservas</a>
+        <a href="tienda.html" class="nav-link-mobile">Tienda</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="mx-auto max-w-6xl px-4 py-14 md:py-18">
+    <!-- Encabezado tienda -->
+    <section class="mb-10 md:mb-14">
+      <p class="section-eyebrow">Tienda</p>
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+        <div>
+          <h1 class="section-title">Productos y máquinas para mantener el corte en casa</h1>
+          <p class="section-subtitle">
+            Podés comprar los mismos productos que usamos en la barbería: máquinas, navajas, aceites, ceras
+            y todo lo necesario para mantener el nivel entre turno y turno.
+          </p>
+        </div>
+        <div class="text-xs md:text-sm text-white/60 max-w-sm">
+          Envíos dentro de la ciudad o retiro en local. El carrito te muestra el total y un resumen listo para copiar
+          y pegar en WhatsApp.
+        </div>
+      </div>
+    </section>
+
+    <!-- Layout: productos + carrito -->
+    <section class="grid lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] gap-8 items-start">
+      <!-- Listado de productos -->
+      <div>
+        <div class="flex flex-wrap items-center gap-3 mb-4 text-xs">
+          <button class="chip filtro-todo" data-filtro="todos">Todos</button>
+          <button class="chip" data-filtro="maquinas">Máquinas de corte</button>
+          <button class="chip" data-filtro="peinado">Ceras y peinadores</button>
+          <button class="chip" data-filtro="barba">Cuidado de barba</button>
+        </div>
+
+        <div id="listaProductos" class="grid sm:grid-cols-2 xl:grid-cols-3 gap-5">
+          <!-- Se completa por JS -->
+        </div>
+      </div>
+
+      <!-- Carrito -->
+      <aside class="cart-card">
+        <div class="flex items-center justify-between mb-2">
+          <div>
+            <h2 class="summary-title">Carrito de compras</h2>
+            <p class="summary-subtitle">Productos listos para enviar por WhatsApp.</p>
+          </div>
+          <span class="px-2 py-1 rounded-full bg-black/60 border border-white/10 text-xs text-white/70">
+            Items: <span id="cartTotalItems">0</span>
+          </span>
+        </div>
+
+        <div id="cartLista" class="space-y-3 mt-3 text-sm">
+          <p class="text-white/60 text-sm">Aún no agregaste productos.</p>
+        </div>
+
+        <div class="border-t border-white/10 mt-4 pt-4 space-y-3 text-sm">
+          <div class="flex items-center justify-between">
+            <span class="text-white/70">Subtotal</span>
+            <span id="cartSubtotal" class="font-semibold">$0</span>
+          </div>
+          <div class="flex items-center justify-between text-xs text-white/60">
+            <span>Nota:</span>
+            <span>Los precios son orientativos, ajustá según tu lista real.</span>
+          </div>
+        </div>
+
+        <div class="mt-5 space-y-3">
+          <button
+            id="btnGenerarPedido"
+            class="w-full px-4 py-2.5 rounded-2xl bg-brand font-semibold text-sm shadow-soft hover:-translate-y-0.5 hover:shadow-lg transition disabled:opacity-40 disabled:cursor-not-allowed"
+            disabled
+          >
+            Generar mensaje de pedido
+          </button>
+          <button
+            id="btnVaciarCarrito"
+            class="w-full px-4 py-2 rounded-2xl border border-white/15 bg-black/40 text-xs hover:bg-white/10 transition disabled:opacity-40 disabled:cursor-not-allowed"
+            disabled
+          >
+            Vaciar carrito
+          </button>
+
+          <div class="text-xs text-white/60">
+            Cuando generes el pedido, abajo vas a ver un texto listo para copiar y pegar en WhatsApp
+            con el detalle de los productos.
+          </div>
+        </div>
+
+        <!-- Resultado del pedido -->
+        <div id="resultadoPedido" class="mt-4 text-xs rounded-2xl border border-dashed border-white/15 bg-black/40 p-3 text-white/70 hidden">
+          <!-- Se llena por JS -->
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/10 bg-black/60">
+    <div class="mx-auto max-w-6xl px-4 py-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/50">
+      <p>Tienda Barber Studio Pro · Modelo de tienda para productos y máquinas.</p>
+      <a href="index.html#inicio" class="underline underline-offset-4 decoration-dotted">
+        Volver al sitio principal
+      </a>
+    </div>
+  </footer>
+
+  <!-- Lógica tienda -->
+  <script src="tienda.js"></script>
+</body>
+</html>

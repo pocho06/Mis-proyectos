@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Barbería </title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter','ui-sans-serif','system-ui'], display: ['Poppins','Inter','ui-sans-serif'] },
+          colors: { base: '#0b0f14', card: '#10161d', brand: '#3b82f6', accent: '#10b981' },
+          boxShadow: { soft: '0 10px 30px rgba(0,0,0,.25)' },
+          keyframes: {
+            floatIn: { '0%':{opacity:0, transform:'translateY(8px)'}, '100%':{opacity:1, transform:'translateY(0)'}},
+            fadeIn: { '0%':{opacity:0}, '100%':{opacity:1}},
+            pingSoft: { '0%':{boxShadow:'0 0 0 0 rgba(59,130,246,.35)'}, '70%':{boxShadow:'0 0 0 14px rgba(59,130,246,0)'}, '100%':{boxShadow:'0 0 0 0 rgba(59,130,246,0)'} }
+          },
+          animation: { floatIn: 'floatIn .45s ease both', fadeIn: 'fadeIn .6s ease both', pingSoft: 'pingSoft 2s ease infinite' }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Scrollbar sutil */
+    ::-webkit-scrollbar{width:10px;height:10px}
+    ::-webkit-scrollbar-thumb{background:#1f2937;border-radius:999px}
+    html,body{scroll-behavior:smooth}
+  </style>
+</head>
+<body class="bg-base text-white font-sans">
+  <!-- Header / Nav -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-base/70 border-b border-white/5">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <a href="#" class="flex items-center gap-2 group">
+        <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-brand to-accent grid place-items-center shadow-soft group-hover:scale-105 transition"><span class="font-display font-bold">BP</span></div>
+        <span class="font-display text-lg tracking-wide">Barbería </span>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm text-white/80">
+        <a href="#servicios" class="hover:text-white transition">Servicios</a>
+        <a href="#contacto" class="hover:text-white transition">Contacto</a>
+         <a href="tienda.html" class="nav-link">Tienda</a>
+        <a href="#reservas" class="ml-2 px-4 py-2 rounded-xl bg-brand hover:brightness-110 transition shadow-soft font-medium">Reservar</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593702295094-22ad3a41730e?q=80&w=1800&auto=format&fit=crop')] bg-cover bg-center opacity-25"></div>
+    <div class="mx-auto max-w-6xl px-4 py-20 md:py-28 relative">
+      <div class="max-w-2xl">
+        <h1 class="font-display text-4xl md:text-6xl font-bold leading-tight animate-floatIn">Tu corte, a nivel premium</h1>
+        <p class="mt-4 text-white/80 md:text-lg animate-floatIn" style="animation-delay:.06s">Cortes clásicos y modernos, afeitado profesional y cuidado de barba. Atención de lunes a sábado.</p>
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a href="#reservas" class="px-6 py-3 rounded-xl bg-brand hover:brightness-110 transition shadow-soft font-semibold animate-floatIn" style="animation-delay:.12s">Reservar turno</a>
+          <a href="#servicios" class="px-6 py-3 rounded-xl border border-white/10 hover:border-white/25 hover:bg-white/5 transition font-medium animate-floatIn" style="animation-delay:.18s">Ver servicios</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Servicios -->
+<section id="servicios" class="mx-auto max-w-6xl px-4 py-14">
+  <header class="mb-8">
+    <h2 class="font-display text-3xl md:text-4xl font-bold">Servicios</h2>
+    <p class="text-white/70 mt-1">Calidad profesional con productos de primera.</p>
+  </header>
+
+  <div class="grid md:grid-cols-3 gap-6">
+
+    <!-- Servicio 1 -->
+    <div class="bg-card rounded-2xl p-6 shadow-soft border border-white/5 animate-floatIn">
+      <h3 class="font-display text-xl">Corte Clásico</h3>
+      <p class="text-white/70 mt-2">Tijera y máquina + consumición.</p>
+      <div class="mt-4 flex items-center justify-between">
+        <span class="text-white font-semibold">$10.000</span>
+
+        <!-- Botón enlazado al formulario -->
+        <a href="#reservas"
+           class="text-brand hover:underline reservar-btn"
+           data-servicio="1">
+          Reservar
+        </a>
+      </div>
+    </div>
+
+    <!-- Servicio 2 -->
+    <div class="bg-card rounded-2xl p-6 shadow-soft border border-white/5 animate-floatIn" style="animation-delay:.06s">
+      <h3 class="font-display text-xl">Barba & Afeitado</h3>
+      <p class="text-white/70 mt-2">Perfilado y toalla caliente.</p>
+      <div class="mt-4 flex items-center justify-between">
+        <span class="text-white font-semibold">$8.500</span>
+
+        <a href="#reservas"
+           class="text-brand hover:underline reservar-btn"
+           data-servicio="2">
+          Reservar
+        </a>
+      </div>
+    </div>
+
+    <!-- Servicio 3 -->
+    <div class="bg-card rounded-2xl p-6 shadow-soft border border-white/5 animate-floatIn" style="animation-delay:.12s">
+      <h3 class="font-display text-xl">Combo Premium</h3>
+      <p class="text-white/70 mt-2">Corte + Barba, experiencia completa.</p>
+      <div class="mt-4 flex items-center justify-between">
+        <span class="text-white font-semibold">$15.000</span>
+
+        <a href="#reservas"
+           class="text-brand hover:underline reservar-btn"
+           data-servicio="3">
+          Reservar
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <!-- Reservas (frontend-only) -->
+  <section id="reservas" class="mx-auto max-w-6xl px-4 pb-20">
+    <header class="mb-6">
+      <h2 class="font-display text-3xl md:text-4xl font-bold">Reservas</h2>
+      <p class="text-white/70">Lunes a sábado · 08:00 a 23:00 · turnos cada 40 min</p>
+    </header>
+
+    <div class="grid md:grid-cols-2 gap-6 items-start">
+   
+      <div class="bg-card rounded-2xl p-5 border border-white/5 shadow-soft">
+        <div class="flex flex-wrap items-center gap-3">
+          <button id="prevDia" class="px-3 py-2 rounded-xl border border-white/10 hover:bg-white/5">◀</button>
+          <input id="fechaTurno" type="date" class="px-3 py-2 rounded-xl bg-black/20 border border-white/10" />
+          <button id="nextDia" class="px-3 py-2 rounded-xl border border-white/10 hover:bg-white/5">▶</button>
+          <button id="hoyBtn" class="ml-auto px-3 py-2 rounded-xl border border-white/10 hover:bg-white/5">Hoy</button>
+        </div>
+        <div id="slots" class="mt-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2"></div>
+        <div class="mt-4 flex flex-wrap items-center gap-3">
+          <button id="confirmar" disabled class="px-5 py-2 rounded-xl bg-brand/70 disabled:opacity-40 hover:brightness-110 transition shadow-soft font-semibold">Confirmar</button>
+          <span id="estado" class="text-white/70"></span>
+        </div>
+      </div>
+
+    
+      <div class="bg-card rounded-2xl p-5 border border-white/5 shadow-soft">
+        <h3 class="font-display text-xl">Resumen</h3>
+        <ul class="mt-3 space-y-2 text-white/80">
+          <li><span class="text-white/60">Fecha:</span> <span id="resFecha">—</span></li>
+          <li><span class="text-white/60">Hora:</span> <span id="resHora">—</span></li>
+          <li><span class="text-white/60">Servicio:</span> <select id="resServicio" class="bg-black/20 border border-white/10 rounded-xl px-3 py-2">
+            <option value="Corte Clásico">Corte Clásico</option>
+            <option value="Barba & Afeitado">Barba & Afeitado</option>
+            <option value="Combo Premium">Combo Premium</option>
+          </select></li>
+        </ul>
+        <p class="mt-4 text-sm text-white/60">___ </p>
+      </div>
+    </div>
+  </section>
+
+
+<section id="contacto" class="mx-auto max-w-6xl px-4 pb-24">
+  <div class="bg-card rounded-2xl p-6 border border-white/5 shadow-soft">
+    <h2 class="font-display text-2xl mb-4">Contacto</h2>
+    <div class="mt-3 grid md:grid-cols-3 gap-6 text-white/80 items-start">
+      
+      <!-- Dirección y teléfono -->
+      <div class="space-y-2">
+        <p class="text-white font-semibold">Dirección</p>
+        <p>___</p>
+        <p class="text-white font-semibold">Teléfono</p>
+        <p>___</p>
+      </div>
+
+      <!-- Redes sociales (más arriba) -->
+      <div class="md:-mt-4 space-y-2">
+        <p class="text-white font-semibold">Redes Sociales</p>
+        <div class="flex flex-col mt-2 space-y-2">
+          <a href="#" id="linkInstagram" class="hover:text-accent flex items-center gap-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-white group-hover:fill-accent" viewBox="0 0 24 24">
+              <path d="M12 2.2c3.2 0 3.6 0 4.9.1 1.2.1 1.8.3 2.2.5.5.2.9.5 1.3.9.4.4.7.8.9 1.3.2.4.4 1 .5 2.2.1 1.3.1 1.7.1 4.9s0 3.6-.1 4.9c-.1 1.2-.3 1.8-.5 2.2-.2.5-.5.9-.9 1.3-.4.4-.8.7-1.3.9-.4.2-1 .4-2.2.5-1.3.1-1.7.1-4.9.1s-3.6 0-4.9-.1c-1.2-.1-1.8-.3-2.2-.5-.5-.2-.9-.5-1.3-.9-.4-.4-.7-.8-.9-1.3-.2-.4-.4-1-.5-2.2C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.9c.1-1.2.3-1.8.5-2.2.2-.5.5-.9.9-1.3.4-.4.8-.7 1.3-.9.4-.2 1-.4 2.2-.5C8.4 2.2 8.8 2.2 12 2.2zm0-2.2C8.7 0 8.3 0 7 .1 5.8.2 4.9.4 4.1.7c-.8.3-1.5.7-2.2 1.3-.6.6-1 1.4-1.3 2.2-.3.8-.5 1.7-.6 2.9C0 8.3 0 8.7 0 12s0 3.7.1 5c.1 1.2.3 2.1.6 2.9.3.8.7 1.5 1.3 2.2.6.6 1.4 1 2.2 1.3.8.3 1.7.5 2.9.6 1.3.1 1.7.1 5 .1s3.7 0 5-.1c1.2-.1 2.1-.3 2.9-.6.8-.3 1.5-.7 2.2-1.3.6-.6 1-1.4 1.3-2.2.3-.8.5-1.7.6-2.9.1-1.3.1-1.7.1-5s0-3.7-.1-5c-.1-1.2-.3-2.1-.6-2.9-.3-.8-.7-1.5-1.3-2.2-.6-.6-1.4-1-2.2-1.3-.8-.3-1.7-.5-2.9-.6C15.7 0 15.3 0 12 0z"/>
+              <circle cx="12" cy="12" r="3.2"/>
+              <circle cx="17.5" cy="6.5" r="1.2"/>
+            </svg>
+            Instagram
+          </a>
+
+          <a href="#" id="linkFacebook" class="hover:text-accent flex items-center gap-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-white group-hover:fill-accent" viewBox="0 0 24 24">
+              <path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.406.593 24 1.325 24H12V14.708h-3.127v-3.625H12V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.464.099 2.795.143v3.24h-1.918c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.625h-3.12V24h6.116c.73 0 1.324-.594 1.324-1.324V1.325C24 .593 23.406 0 22.675 0z"/>
+            </svg>
+            Facebook
+          </a>
+
+          <a href="#" id="linkWhatsApp" class="hover:text-accent flex items-center gap-2 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-white group-hover:fill-accent" viewBox="0 0 24 24">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.031-.967-.273-.099-.472-.149-.672.15-.198.297-.767.967-.941 1.164-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.149-.174.198-.298.297-.497.099-.198.05-.372-.025-.521-.074-.149-.672-1.611-.921-2.207-.242-.579-.487-.5-.672-.51-.173-.007-.372-.009-.571-.009-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.29.173-1.414-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12 0C5.373 0 0 5.373 0 12c0 2.12.553 4.094 1.512 5.82L0 24l6.334-1.482C8.896 23.447 10.96 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+            </svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<script>
+  // Cargar redes sociales del usuario (localStorage)
+  const user = JSON.parse(localStorage.getItem("sesion") || "{}");
+  if(user.redes){
+    if(user.redes.instagram) document.getElementById("linkInstagram").href = user.redes.instagram;
+    if(user.redes.facebook) document.getElementById("linkFacebook").href = user.redes.facebook;
+    if(user.redes.whatsapp) document.getElementById("linkWhatsApp").href = user.redes.whatsapp;
+  }
+</script>
+
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8 text-center text-white/60">
+    © <span id="year"></span> barberia...
+  </footer>
+
+  <!-- Chat flotante (frontend demo) -->
+  <button id="chatToggle" class="fixed bottom-6 right-6 px-4 py-3 rounded-2xl bg-brand shadow-soft font-semibold hover:brightness-110 transition animate-pingSoft">Chat</button>
+
+  <div id="chatWidget" class="hidden fixed bottom-24 right-6 w-[360px] max-w-[92vw] bg-card rounded-2xl border border-white/10 shadow-soft overflow-hidden">
+    <div class="px-4 py-3 border-b border-white/10 flex items-center justify-between">
+      <p class="font-display">Chat</p>
+      <button id="chatClose" class="text-white/60 hover:text-white">✕</button>
+    </div>
+    <div id="chatBox" class="h-72 overflow-y-auto p-3 space-y-2 text-[15px]"></div>
+    <div class="p-3 border-t border-white/10 flex items-center gap-2">
+      <input id="chatInput" class="flex-1 px-3 py-2 rounded-xl bg-black/20 border border-white/10" placeholder="Escribí un mensaje..." />
+      <button id="chatSend" class="px-4 py-2 rounded-xl bg-accent/80 hover:brightness-110 font-semibold">Enviar</button>
+    </div>
+  </div>
+
+  <script>
+    // Utiles
+    const pad = n => String(n).padStart(2,'0');
+    const toISODate = d => new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+
+    // Año footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ===== Reservas =====
+    const fechaInput = document.getElementById('fechaTurno');
+    const prevBtn = document.getElementById('prevDia');
+    const nextBtn = document.getElementById('nextDia');
+    const hoyBtn  = document.getElementById('hoyBtn');
+    const slotsEl = document.getElementById('slots');
+    const confirmarBtn = document.getElementById('confirmar');
+    const estado = document.getElementById('estado');
+    const resFecha = document.getElementById('resFecha');
+    const resHora  = document.getElementById('resHora');
+
+    const MS_MIN = 60*1000;
+
+    function isMonToSat(date){ const d = date.getDay(); return d>=1 && d<=6; }
+    function listSlots(date){
+      const slots=[]; const start=new Date(date); start.setHours(8,0,0,0); const end=new Date(date); end.setHours(23,0,0,0);
+      let t=start.getTime(); const step=40*MS_MIN;
+      while(t <= end.getTime()-step){ const d=new Date(t); slots.push(`${pad(d.getHours())}:${pad(d.getMinutes())}`); t+=step; }
+      return slots;
+    }
+
+    function renderSlots(date){
+      slotsEl.innerHTML = '';
+      const today = new Date(); const dateISO = toISODate(date);
+      if(!isMonToSat(date)){
+        slotsEl.innerHTML = '<div class="col-span-full text-white/70">Solo atendemos de <b>lunes a sábado</b>.</div>';
+        confirmarBtn.disabled = true; resHora.textContent = '—'; resFecha.textContent = dateISO; return;
+      }
+      const slots = listSlots(date);
+      const nowMins = today.getHours()*60 + today.getMinutes();
+      slots.forEach(hh => {
+        const btn = document.createElement('button');
+        btn.className = 'px-3 py-2 rounded-xl border border-white/10 hover:bg-white/5 text-left';
+        btn.textContent = hh;
+        const isPast = (dateISO === toISODate(today)) && ((+hh.slice(0,2))*60 + (+hh.slice(3)) <= nowMins);
+        if(isPast){ btn.disabled = true; btn.classList.add('opacity-40','cursor-not-allowed'); }
+        btn.addEventListener('click', () => {
+          slotsEl.querySelectorAll('.selected').forEach(x=>x.classList.remove('selected','bg-brand/20','border-brand'));
+          btn.classList.add('selected','bg-brand/20'); btn.classList.add('border-brand');
+          confirmarBtn.disabled = false;
+          resHora.textContent = hh; resFecha.textContent = dateISO;
+        });
+        slotsEl.appendChild(btn);
+      });
+      confirmarBtn.disabled = true; resFecha.textContent = dateISO; resHora.textContent='—';
+    }
+
+    function shiftDate(days){ const d = new Date(fechaInput.value+'T12:00:00'); d.setDate(d.getDate()+days); fechaInput.value = toISODate(d); renderSlots(d); }
+
+    // Init calendario
+    (function initCalendar(){
+      const today = new Date();
+      fechaInput.value = toISODate(today);
+      renderSlots(today);
+      prevBtn.addEventListener('click', ()=> shiftDate(-1));
+      nextBtn.addEventListener('click', ()=> shiftDate(1));
+      hoyBtn.addEventListener('click', ()=> { const d=new Date(); fechaInput.value=toISODate(d); renderSlots(d); });
+      fechaInput.addEventListener('change', (e)=>{ const d=new Date(e.target.value+'T12:00:00'); renderSlots(d); });
+    })();
+
+    confirmarBtn.addEventListener('click', ()=>{
+      if(confirmarBtn.disabled) return;
+      estado.textContent = ' Turno reservado (demo)';
+      estado.classList.add('text-accent');
+      confirmarBtn.disabled = true;
+    });
+
+    // ===== Chat demo (frontend) =====
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWidget = document.getElementById('chatWidget');
+    const chatClose  = document.getElementById('chatClose');
+    const chatBox    = document.getElementById('chatBox');
+    const chatInput  = document.getElementById('chatInput');
+    const chatSend   = document.getElementById('chatSend');
+
+    const msgs = [ {from:'bot', text:'¡Hola! ¿En qué te ayudo?'} ];
+
+    function renderChat(){
+      chatBox.innerHTML = '';
+      msgs.forEach(m=>{
+        const wrap = document.createElement('div');
+        const mine = m.from === 'you';
+        wrap.className = 'max-w-[85%] ' + (mine ? 'ml-auto' : 'mr-auto');
+        wrap.innerHTML = `<div class="rounded-2xl px-3 py-2 ${mine ? 'bg-brand/25' : 'bg-white/10'}">${m.text}</div>`;
+        chatBox.appendChild(wrap);
+      });
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+    renderChat();
+
+    function send(){
+      const t = chatInput.value.trim(); if(!t) return;
+      msgs.push({from:'you', text:t}); chatInput.value=''; renderChat();
+      // Simular respuesta
+      setTimeout(()=>{ msgs.push({from:'bot', text:'Gracias por tu mensaje. En breve te respondemos.'}); renderChat(); }, 600);
+    }
+
+    chatToggle.addEventListener('click', ()=> { chatWidget.classList.toggle('hidden'); });
+    chatClose.addEventListener('click', ()=> chatWidget.classList.add('hidden'));
+    chatSend.addEventListener('click', send);
+    chatInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); send(); } });
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4b31b">
+  <title>Libertad y Cambio | Dónde voto</title>
+  <link rel="icon" type="image/png" href="imagen/favicon-libertad-cambio.png">
+  <link rel="apple-touch-icon" href="imagen/app-icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="prototype-page library-page vote-page">
+    <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+
+    <header class="library-header">
+      <a class="brand" href="index.html#top" aria-label="Volver al inicio">
+        <img class="brand-logo" src="imagen/logo-libertad-cambio-nuevo-recortado.png" alt="Logo de Libertad y Cambio">
+      </a>
+      <a class="library-back" href="index.html#top">Volver a la página</a>
+    </header>
+
+    <section class="content-section lookup-section vote-lookup-section" id="padron">
+      <div class="lookup-copy">
+        <span class="lookup-emblem" aria-hidden="true">
+          <img src="imagen/logo-donde-votas.png" alt="" loading="lazy" decoding="async">
+        </span>
+        <span class="section-label">Votaciones</span>
+        <h1>¿Dónde votás?</h1>
+        <p>
+          Ingresá tu DNI y consultá tu mesa, aula y lugar de votación.
+        </p>
+      </div>
+
+      <form class="lookup-panel" data-padron-form>
+        <label class="lookup-label" for="dni-consulta">DNI</label>
+        <div class="lookup-row">
+          <input id="dni-consulta" name="dni" type="text" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="12345678" data-dni-input>
+          <button type="submit">Buscar</button>
+        </div>
+        <p class="lookup-status" data-padron-status>Cargando padron...</p>
+        <div class="lookup-result" data-padron-result hidden></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

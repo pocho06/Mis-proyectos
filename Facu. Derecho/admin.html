@@ -1,0 +1,200 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4b31b">
+  <title>Libertad y Cambio | Admin</title>
+  <link rel="icon" type="image/png" href="imagen/favicon-libertad-cambio.png">
+  <link rel="apple-touch-icon" href="imagen/app-icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="prototype-page admin-page">
+    <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+
+    <header class="admin-header">
+      <a class="brand" href="index.html#top" aria-label="Volver al inicio">
+        <img class="brand-logo" src="imagen/logo-libertad-cambio-nuevo-recortado.png" alt="Logo de Libertad y Cambio">
+      </a>
+
+      <nav class="admin-nav" aria-label="Navegacion de administrador">
+        <a href="index.html#top">Inicio</a>
+        <a href="biblioteca.html">Biblioteca</a>
+        <a href="donde-voto.html">Dónde voto</a>
+        <button class="login-button" type="button" data-login-button>Iniciar sesión</button>
+        <button type="button" data-admin-logout hidden>Salir</button>
+      </nav>
+    </header>
+
+    <section class="admin-hero">
+      <span class="section-label">Panel privado</span>
+      <h1>Administracion de Libertad y Cambio</h1>
+      <p>
+        Desde aca podes cargar materiales para la biblioteca, revisar denuncias o recomendaciones
+        y ordenar la informacion que despues se muestra en la pagina.
+      </p>
+    </section>
+
+    <section class="admin-login-card" data-admin-login>
+      <div>
+        <span class="section-label">Acceso administrador</span>
+        <h2>Iniciá sesión como admin</h2>
+        <p>Las herramientas administrativas aparecen únicamente cuando entrás con el perfil de administrador.</p>
+      </div>
+
+      <button class="hero-button section-button" type="button" data-login-gate-button data-login-mode="admin">Abrir login admin</button>
+    </section>
+
+    <section class="admin-shell" data-admin-panel hidden>
+      <div class="admin-dashboard" aria-label="Resumen del panel">
+        <article>
+          <span>Materiales</span>
+          <strong data-admin-total-materials>0</strong>
+          <p>Cargados desde el panel</p>
+        </article>
+        <article>
+          <span>Reportes</span>
+          <strong data-admin-total-reports>0</strong>
+          <p>Denuncias y recomendaciones</p>
+        </article>
+        <article>
+          <span>Pendientes</span>
+          <strong data-admin-pending-reports>0</strong>
+          <p>Necesitan revision</p>
+        </article>
+      </div>
+
+      <div class="admin-grid">
+        <article class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <span class="section-label">Biblioteca</span>
+              <h2>Cargar material</h2>
+            </div>
+            <button class="admin-soft-button" type="button" data-admin-export-materials>Exportar</button>
+          </div>
+
+          <form class="admin-form" data-admin-material-form>
+            <div class="admin-form-row">
+              <label>
+                Titulo
+                <input name="title" type="text" maxlength="90" placeholder="Ej: Historia A - Unidad 1" required>
+              </label>
+              <label>
+                Donde se carga
+                <select name="target" required>
+                  <option value="">Elegir materia, optativa o recurso</option>
+                  <optgroup label="1° año">
+                    <option value="historia-a">Historia A</option>
+                    <option value="historia-b">Historia B</option>
+                    <option value="contenidos-transversales">Contenidos Transversales</option>
+                    <option value="destrezas-i">Destrezas I</option>
+                    <option value="historia-estado-a">Historia en Teoria del Estado A</option>
+                    <option value="historia-estado-b">Historia en Teoria del Estado B</option>
+                    <option value="teoria-derecho-justicia-a">Teoria del Derecho y de la Justicia A</option>
+                    <option value="teoria-derecho-justicia-b">Teoria del Derecho y de la Justicia B</option>
+                    <option value="economia">Economia</option>
+                    <option value="nociones-economicas">Nociones Economicas</option>
+                  </optgroup>
+                  <optgroup label="Otros años">
+                    <option value="year-2">2° año</option>
+                    <option value="year-3">3° año</option>
+                    <option value="year-4">4° año</option>
+                    <option value="year-5">5° año</option>
+                    <option value="year-6">6° año</option>
+                  </optgroup>
+                  <optgroup label="Optativas">
+                    <option value="optativas-primer-bloque">Optativas Primer Bloque</option>
+                    <option value="optativas-segundo-bloque">Optativas Segundo Bloque</option>
+                    <option value="optativas-3">Optativas 3</option>
+                    <option value="optativas-4">Optativas 4</option>
+                    <option value="optativas-5">Optativas 5</option>
+                  </optgroup>
+                  <optgroup label="Recursos">
+                    <option value="plan-estudio">Plan de estudio</option>
+                    <option value="codigo-civil">Codigo Civil</option>
+                    <option value="constitucion">Constitucion</option>
+                  </optgroup>
+                </select>
+              </label>
+            </div>
+
+            <div class="admin-form-row">
+              <label>
+                Tipo
+                <select name="type">
+                  <option value="PDF">PDF</option>
+                  <option value="Drive">Drive</option>
+                  <option value="Video">Video</option>
+                  <option value="Link">Link</option>
+                  <option value="Apunte">Apunte</option>
+                </select>
+              </label>
+              <label>
+                Link del archivo
+                <input name="url" type="url" placeholder="https://...">
+              </label>
+            </div>
+
+            <label>
+              Descripcion
+              <textarea name="description" rows="4" maxlength="260" placeholder="Breve descripcion para que el estudiante sepa que contiene."></textarea>
+            </label>
+
+            <button type="submit">Guardar material</button>
+          </form>
+
+          <div class="admin-list" data-admin-material-list></div>
+        </article>
+
+        <article class="admin-panel">
+          <div class="admin-panel-head">
+            <div>
+              <span class="section-label">Mensajes</span>
+              <h2>Denuncias y recomendaciones</h2>
+            </div>
+            <button class="admin-soft-button" type="button" data-admin-export-reports>Exportar</button>
+          </div>
+
+          <p class="admin-panel-copy">
+            Los mensajes aparecen aca para que el equipo pueda revisarlos, responderlos o eliminarlos.
+          </p>
+
+          <div class="admin-list" data-admin-report-list></div>
+        </article>
+      </div>
+    </section>
+  </main>
+  <div class="login-overlay" data-login-modal hidden>
+    <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <button class="login-close" type="button" aria-label="Cerrar inicio de sesión" data-login-close>&times;</button>
+      <p class="login-kicker" data-login-kicker>Acceso estudiantes</p>
+      <h2 id="login-title" data-login-title>Ingresar DNI</h2>
+      <p class="login-copy" data-login-copy>
+        Usá tu DNI sin puntos ni espacios para entrar con los datos del padrón.
+      </p>
+
+      <div class="login-mode-switch" aria-label="Tipo de acceso">
+        <button class="is-active" type="button" data-login-mode-option="student">Estudiante</button>
+        <button type="button" data-login-mode-option="admin">Administrador</button>
+      </div>
+
+      <form class="login-form" data-login-form>
+        <label for="login-dni" data-login-label>DNI</label>
+        <input id="login-dni" name="dni" type="text" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="12345678" data-login-dni>
+        <button type="submit">Entrar</button>
+        <p class="login-status" data-login-status></p>
+      </form>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+

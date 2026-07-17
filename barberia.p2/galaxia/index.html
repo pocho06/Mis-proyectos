@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solar System Explorer</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&amp;family=Exo+2:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+html, body { margin:0; padding:0; height:100%; overflow:hidden; }
+* { box-sizing: border-box; }
+
+.star-field {
+  position: fixed; inset:0; z-index:0;
+  background: radial-gradient(ellipse at 20% 50%, #0a0e27 0%, #020412 50%, #000000 100%);
+}
+.star-field::before, .star-field::after {
+  content:''; position:absolute; inset:0; border-radius:50%;
+}
+.star-field::before {
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 50% 10%, rgba(200,220,255,0.9), transparent),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 15% 90%, rgba(200,200,255,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 85% 15%, rgba(255,240,200,0.8), transparent),
+    radial-gradient(1px 1px at 45% 55%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 60% 85%, rgba(220,220,255,0.6), transparent),
+    radial-gradient(1px 1px at 25% 45%, rgba(255,255,255,0.5), transparent);
+  animation: twinkle 4s ease-in-out infinite alternate;
+}
+.star-field::after {
+  background-image:
+    radial-gradient(1px 1px at 5% 50%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 35% 25%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 55% 75%, rgba(200,210,255,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 75% 60%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 95% 30%, rgba(255,255,255,0.4), transparent),
+    radial-gradient(1px 1px at 20% 65%, rgba(255,240,220,0.5), transparent),
+    radial-gradient(1px 1px at 80% 90%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 40% 5%, rgba(220,230,255,0.7), transparent);
+  animation: twinkle 5s ease-in-out infinite alternate-reverse;
+}
+@keyframes twinkle { 0%{opacity:0.6} 100%{opacity:1} }
+
+canvas#solarCanvas { position:absolute; inset:0; z-index:1; width:100%; height:100%; }
+
+.ui-overlay { position:relative; z-index:10; pointer-events:none; }
+.ui-overlay > * { pointer-events:auto; }
+
+.glass {
+  background: rgba(8,12,40,0.75);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(100,140,255,0.15);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.4), inset 0 1px 0 rgba(100,140,255,0.1);
+}
+.glass-bright {
+  background: rgba(20,30,80,0.8);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(100,160,255,0.25);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(120,160,255,0.15);
+}
+
+.info-card {
+  animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(20px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.orbit-ring { animation: orbitPulse 3s ease-in-out infinite; }
+@keyframes orbitPulse { 0%,100%{opacity:0.15} 50%{opacity:0.35} }
+
+.planet-btn { transition: all 0.25s cubic-bezier(0.16,1,0.3,1); }
+.planet-btn:hover { transform: scale(1.08); }
+.planet-btn.active { box-shadow: 0 0 20px rgba(100,160,255,0.4); border-color: rgba(100,160,255,0.6) !important; }
+
+.speed-btn { transition: all 0.15s ease; }
+.speed-btn.active-speed { background: rgba(100,160,255,0.3); border-color: rgba(100,160,255,0.5); }
+
+.glow-text { text-shadow: 0 0 20px rgba(100,160,255,0.3); }
+
+.tooltip-arrow::after {
+  content:''; position:absolute; top:100%; left:50%; transform:translateX(-50%);
+  border:6px solid transparent; border-top-color:rgba(8,12,40,0.75);
+}
+
+.fade-in { animation: fadeIn 0.3s ease both; }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(100,140,255,0.3); border-radius:2px; }
+</style>
+  <style>body { box-sizing: border-box; }</style>
+ </head>
+ <body class="h-full">
+  <div id="app-root" class="h-full w-full" style="position:relative; overflow:hidden;">
+   <div class="star-field"></div>
+   <canvas id="solarCanvas"></canvas>
+   <div class="ui-overlay" style="position:absolute; inset:0; display:flex; flex-direction:column; height:100%;"><!-- Top Bar -->
+    <header class="flex items-center justify-between px-4 py-3" style="flex-shrink:0;">
+     <div class="flex items-center gap-3">
+      <div class="glass rounded-xl px-4 py-2 flex items-center gap-2"><span style="font-size:20px;">🪐</span>
+       <div>
+        <h1 id="mainTitle" class="glow-text" style="font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700; color:#c8d8ff; line-height:1.2; letter-spacing:1px;">EXPLORADOR DEL SISTEMA SOLAR</h1>
+        <p id="subtitleText" style="font-family:'Exo 2',sans-serif; font-size:10px; color:rgba(160,180,220,0.7); letter-spacing:0.5px;">Navega por el cosmos</p>
+       </div>
+      </div>
+     </div>
+     <div class="flex items-center gap-2"><!-- Speed Controls -->
+      <div class="glass rounded-xl px-3 py-2 flex items-center gap-1"><span style="font-family:'Exo 2',sans-serif; font-size:9px; color:rgba(160,180,220,0.6); margin-right:4px;">VELOCIDAD</span> <button onclick="setSpeed(0)" class="speed-btn rounded-lg px-2 py-1" style="font-family:'Orbitron',sans-serif; font-size:10px; color:#8aa0cc; border:1px solid rgba(100,140,255,0.1);" data-speed="0">⏸</button> <button onclick="setSpeed(1)" class="speed-btn active-speed rounded-lg px-2 py-1" style="font-family:'Orbitron',sans-serif; font-size:10px; color:#8aa0cc; border:1px solid rgba(100,140,255,0.1);" data-speed="1">1×</button> <button onclick="setSpeed(3)" class="speed-btn rounded-lg px-2 py-1" style="font-family:'Orbitron',sans-serif; font-size:10px; color:#8aa0cc; border:1px solid rgba(100,140,255,0.1);" data-speed="3">3×</button> <button onclick="setSpeed(10)" class="speed-btn rounded-lg px-2 py-1" style="font-family:'Orbitron',sans-serif; font-size:10px; color:#8aa0cc; border:1px solid rgba(100,140,255,0.1);" data-speed="10">10×</button>
+      </div><!-- Toggle Orbits --> <button id="toggleOrbitsBtn" onclick="toggleOrbits()" class="glass rounded-xl px-3 py-2 flex items-center gap-1" style="font-family:'Exo 2',sans-serif; font-size:10px; color:#8aa0cc;"> <i data-lucide="circle" style="width:14px;height:14px;"></i> <span>Órbitas</span> </button> <!-- Toggle Labels --> <button id="toggleLabelsBtn" onclick="toggleLabels()" class="glass rounded-xl px-3 py-2 flex items-center gap-1" style="font-family:'Exo 2',sans-serif; font-size:10px; color:#8aa0cc;"> <i data-lucide="type" style="width:14px;height:14px;"></i> <span>Nombres</span> </button>
+     </div>
+    </header><!-- Planet Selector -->
+    <div class="flex justify-center" style="flex-shrink:0; margin-top:2px;">
+     <div class="glass rounded-2xl px-4 py-2 flex items-center gap-3"><button onclick="focusPlanet('sun')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="sun" style="border:1px solid rgba(255,200,50,0.2);"> <span style="font-size:18px;">☀️</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#ffdd77;">Sol</span> </button> <button onclick="focusPlanet('mercury')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="mercury" style="border:1px solid rgba(140,120,83,0.2);"> <span style="font-size:18px;">☿</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#b8b8b8;">Mercurio</span> </button> <button onclick="focusPlanet('venus')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="venus" style="border:1px solid rgba(255,198,73,0.2);"> <span style="font-size:18px;">♀</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#ffe4b5;">Venus</span> </button> <button onclick="focusPlanet('earth')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2 active" data-planet="earth" style="border:1px solid rgba(100,160,255,0.2);"> <span style="font-size:18px;">🌍</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#7eb8ff;">Tierra</span> </button> <button onclick="focusPlanet('moon')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="moon" style="border:1px solid rgba(200,200,210,0.2);"> <span style="font-size:18px;">🌙</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#c8c8d4;">Luna</span> </button> <button onclick="focusPlanet('mars')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="mars" style="border:1px solid rgba(255,120,80,0.2);"> <span style="font-size:18px;">🔴</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#ff9070;">Marte</span> </button> <button onclick="focusPlanet('jupiter')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="jupiter" style="border:1px solid rgba(216,202,157,0.2);"> <span style="font-size:18px;">🪐</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#f5e6c3;">Júpiter</span> </button> <button onclick="focusPlanet('saturn')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="saturn" style="border:1px solid rgba(250,213,165,0.2);"> <span style="font-size:18px;">🪐</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#fff8dc;">Saturno</span> </button> <button onclick="focusPlanet('uranus')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="uranus" style="border:1px solid rgba(79,208,231,0.2);"> <span style="font-size:18px;">🪐</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#aeedee;">Urano</span> </button> <button onclick="focusPlanet('neptune')" class="planet-btn glass rounded-xl px-3 py-2 flex items-center gap-2" data-planet="neptune" style="border:1px solid rgba(75,112,221,0.2);"> <span style="font-size:18px;">🪐</span> <span style="font-family:'Exo 2',sans-serif; font-size:11px; color:#a4c8f0;">Neptuno</span> </button>
+     </div>
+    </div><!-- Spacer to push info panel down -->
+    <div style="flex:1;"></div><!-- Bottom Info Panel -->
+    <div id="infoPanel" class="info-card px-4 pb-4" style="flex-shrink:0;">
+     <div class="glass-bright rounded-2xl p-4" style="max-width:520px; margin:0 auto;">
+      <div class="flex items-start gap-4">
+       <div id="infoPlanetIcon" style="font-size:40px; line-height:1; flex-shrink:0;">
+        🌍
+       </div>
+       <div style="flex:1; min-width:0;">
+        <h2 id="infoPlanetName" class="glow-text" style="font-family:'Orbitron',sans-serif; font-size:18px; font-weight:700; color:#d0e0ff; margin-bottom:2px;">Tierra</h2>
+        <p id="infoPlanetDesc" style="font-family:'Exo 2',sans-serif; font-size:11px; color:rgba(160,180,220,0.7); line-height:1.5; margin-bottom:8px;">Nuestro hogar cósmico. El único planeta conocido que alberga vida, con una atmósfera rica en nitrógeno y oxígeno.</p>
+        <div id="infoStats" class="grid grid-cols-3 gap-2"><!-- Stats injected by JS -->
+        </div>
+       </div>
+      </div><!-- Orbital Mechanics Insight -->
+      <div id="orbitalInsight" class="mt-3 pt-3" style="border-top:1px solid rgba(100,140,255,0.1);">
+       <div class="flex items-center gap-1 mb-1"><i data-lucide="info" style="width:12px;height:12px;color:rgba(100,160,255,0.6);"></i> <span style="font-family:'Orbitron',sans-serif; font-size:9px; color:rgba(100,160,255,0.6); letter-spacing:1px;">MECÁNICA ORBITAL</span>
+       </div>
+       <p id="orbitalText" style="font-family:'Exo 2',sans-serif; font-size:10px; color:rgba(160,180,220,0.6); line-height:1.6;">La Tierra orbita al Sol a ~29.8 km/s. Su órbita elíptica tiene una excentricidad de solo 0.017, casi circular.</p>
+      </div>
+     </div>
+    </div><!-- Distance Measurement Tool -->
+    <div id="distanceTool" class="glass rounded-xl px-3 py-2 flex items-center gap-2 fade-in" style="position:absolute; bottom:160px; left:50%; transform:translateX(-50%); display:none;"><i data-lucide="ruler" style="width:14px;height:14px;color:#8aa0cc;"></i> <span id="distanceText" style="font-family:'Exo 2',sans-serif; font-size:11px; color:#a0b4dc;">Tierra → Marte: ~225M km</span>
+    </div><!-- Controls Help -->
+    <div class="glass rounded-xl px-3 py-2" style="position:absolute; bottom:12px; right:12px;">
+     <div class="flex items-center gap-3" style="font-family:'Exo 2',sans-serif; font-size:9px; color:rgba(160,180,220,0.5);"><span>🖱️ Arrastrar = Rotar</span> <span>⚙️ Scroll = Zoom</span> <span>📌 Click = Seleccionar</span>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+// ====== DATA ======
+const BODIES = {
+  sun: {
+    name: 'Sol', icon: '☀️', color: '#FFD93D', glowColor: 'rgba(255,217,61,0.3)',
+    radius: 30, orbitRadius: 0, speed: 0, angle: 0,
+    desc: 'Nuestra estrella, una esfera de plasma que contiene el 99.86% de la masa del sistema solar.',
+    stats: [
+      { label: 'Diámetro', value: '1.39M km' },
+      { label: 'Temperatura', value: '5,500°C' },
+      { label: 'Tipo', value: 'Enana G2V' }
+    ],
+    orbital: 'El Sol no orbita nada en nuestro modelo. En realidad, orbita el centro de la Vía Láctea a ~220 km/s, completando una vuelta cada ~225 millones de años.'
+  },
+  mercury: {
+    name: 'Mercurio', icon: '☿', color: '#8C7853', glowColor: 'rgba(140,120,83,0.2)',
+    radius: 6, orbitRadius: 80, speed: 0.02, angle: 0,
+    desc: 'El planeta más cercano al Sol. Tiene temperaturas extremas y un día que dura 59 días terrestres.',
+    stats: [
+      { label: 'Dist. al Sol', value: '57.9M km' },
+      { label: 'Período', value: '88 días' },
+      { label: 'Gravedad', value: '3.7 m/s²' }
+    ],
+    orbital: 'Mercurio tiene la órbita más excéntrica (0.205) y la más inclinada (7°) de los planetas rocosos.'
+  },
+  venus: {
+    name: 'Venus', icon: '♀', color: '#FFC649', glowColor: 'rgba(255,198,73,0.25)',
+    radius: 12, orbitRadius: 110, speed: 0.015, angle: Math.PI * 0.5,
+    desc: 'El planeta más caliente del sistema solar debido a su efecto invernadero extremo.',
+    stats: [
+      { label: 'Dist. al Sol', value: '108.2M km' },
+      { label: 'Período', value: '225 días' },
+      { label: 'Gravedad', value: '8.87 m/s²' }
+    ],
+    orbital: 'Venus rota en dirección opuesta a la mayoría de planetas (rotación retrógrada). Un día venusiano dura 243 días terrestres.'
+  },
+  earth: {
+    name: 'Tierra', icon: '🌍', color: '#4A90D9', glowColor: 'rgba(74,144,217,0.25)',
+    radius: 14, orbitRadius: 140, speed: 0.008, angle: 0,
+    desc: 'Nuestro hogar cósmico. El único planeta conocido que alberga vida, con una atmósfera rica en nitrógeno y oxígeno.',
+    stats: [
+      { label: 'Dist. al Sol', value: '149.6M km' },
+      { label: 'Período', value: '365.25 días' },
+      { label: 'Gravedad', value: '9.8 m/s²' }
+    ],
+    orbital: 'La Tierra orbita al Sol a ~29.8 km/s. Su órbita elíptica tiene una excentricidad de solo 0.017, casi circular. La inclinación axial de 23.4° causa las estaciones.'
+  },
+  moon: {
+    name: 'Luna', icon: '🌙', color: '#C8C8D4', glowColor: 'rgba(200,200,212,0.15)',
+    radius: 5, orbitRadius: 30, speed: 0.05, angle: 0, parent: 'earth',
+    desc: 'El único satélite natural de la Tierra. Su gravedad causa las mareas y estabiliza la inclinación axial terrestre.',
+    stats: [
+      { label: 'Dist. a Tierra', value: '384,400 km' },
+      { label: 'Período', value: '27.3 días' },
+      { label: 'Gravedad', value: '1.62 m/s²' }
+    ],
+    orbital: 'La Luna está en rotación sincrónica: siempre muestra la misma cara a la Tierra. Se aleja ~3.8 cm/año debido a la transferencia de momento angular por las mareas.'
+  },
+  mars: {
+    name: 'Marte', icon: '🔴', color: '#E07040', glowColor: 'rgba(224,112,64,0.2)',
+    radius: 10, orbitRadius: 220, speed: 0.0043, angle: Math.PI * 0.7,
+    desc: 'El Planeta Rojo. Su superficie oxidada le da su color característico. Tiene el volcán más alto del sistema solar: Olympus Mons.',
+    stats: [
+      { label: 'Dist. al Sol', value: '227.9M km' },
+      { label: 'Período', value: '687 días' },
+      { label: 'Gravedad', value: '3.72 m/s²' }
+    ],
+    orbital: 'Marte tiene una órbita más excéntrica (0.093) que la Tierra. Su distancia al Sol varía entre 207M y 249M km, causando variaciones climáticas estacionales intensas.'
+  },
+  jupiter: {
+    name: 'Júpiter', icon: '🪐', color: '#D8CA9D', glowColor: 'rgba(216,202,157,0.3)',
+    radius: 25, orbitRadius: 320, speed: 0.002, angle: Math.PI * 1.2,
+    desc: 'El gigante gaseoso más grande. Tiene al menos 95 lunas y una Gran Mancha Roja, una tormenta gigante.',
+    stats: [
+      { label: 'Dist. al Sol', value: '778.5M km' },
+      { label: 'Período', value: '11.86 años' },
+      { label: 'Gravedad', value: '24.79 m/s²' }
+    ],
+    orbital: 'Júpiter actúa como un "aspirador" gravitacional, protegiendo a los planetas interiores de asteroides y cometas.'
+  },
+  saturn: {
+    name: 'Saturno', icon: '🪐', color: '#FAD5A5', glowColor: 'rgba(250,213,165,0.25)',
+    radius: 22, orbitRadius: 420, speed: 0.0015, angle: Math.PI * 1.8,
+    desc: 'Famoso por sus anillos espectaculares compuestos de hielo y roca. Tiene más de 140 lunas.',
+    stats: [
+      { label: 'Dist. al Sol', value: '1.43B km' },
+      { label: 'Período', value: '29.46 años' },
+      { label: 'Gravedad', value: '10.44 m/s²' }
+    ],
+    orbital: 'Los anillos de Saturno son increíblemente delgados, con solo unos pocos kilómetros de grosor pero extendiéndose cientos de miles de kilómetros.'
+  },
+  uranus: {
+    name: 'Urano', icon: '🪐', color: '#4FD0E7', glowColor: 'rgba(79,208,231,0.2)',
+    radius: 18, orbitRadius: 520, speed: 0.001, angle: Math.PI * 0.3,
+    desc: 'Un gigante de hielo que rota de lado. Su eje de rotación está inclinado 98 grados.',
+    stats: [
+      { label: 'Dist. al Sol', value: '2.87B km' },
+      { label: 'Período', value: '84.01 años' },
+      { label: 'Gravedad', value: '8.87 m/s²' }
+    ],
+    orbital: 'Urano es el único planeta que rota de lado. Las estaciones duran 21 años terrestres cada una.'
+  },
+  neptune: {
+    name: 'Neptuno', icon: '🪐', color: '#4B70DD', glowColor: 'rgba(75,112,221,0.25)',
+    radius: 17, orbitRadius: 600, speed: 0.0008, angle: Math.PI * 1.5,
+    desc: 'El planeta más distante del Sol. Tiene vientos supersónicos y una Gran Mancha Oscura similar a la de Júpiter.',
+    stats: [
+      { label: 'Dist. al Sol', value: '4.5B km' },
+      { label: 'Período', value: '164.8 años' },
+      { label: 'Gravedad', value: '11.15 m/s²' }
+    ],
+    orbital: 'Neptune completó solo una órbita alrededor del Sol desde su descubrimiento en 1846. Tiene 14 lunas conocidas.'
+  }
+};
+
+// ====== STATE ======
+let state = {
+  focused: 'earth',
+  speedMul: 1,
+  showOrbits: true,
+  showLabels: true,
+  camAngleX: -0.4,
+  camAngleY: 0.3,
+  camDist: 800,
+  targetCamDist: 800,
+  dragging: false,
+  lastMouse: { x:0, y:0 },
+  positions: {}
+};
+
+// ====== CANVAS SETUP ======
+const canvas = document.getElementById('solarCanvas');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = canvas.clientWidth * devicePixelRatio;
+  canvas.height = canvas.clientHeight * devicePixelRatio;
+  ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ====== 3D PROJECTION ======
+function project(x, y, z) {
+  const cosX = Math.cos(state.camAngleX), sinX = Math.sin(state.camAngleX);
+  const cosY = Math.cos(state.camAngleY), sinY = Math.sin(state.camAngleY);
+
+  let rx = x, ry = y * cosX - z * sinX, rz = y * sinX + z * cosX;
+  let fx = rx * cosY + rz * sinY, fy = ry, fz = -rx * sinY + rz * cosY;
+
+  const perspective = state.camDist / (state.camDist + fz);
+  const cx = canvas.clientWidth / 2, cy = canvas.clientHeight / 2;
+  return {
+    sx: cx + fx * perspective,
+    sy: cy + fy * perspective,
+    scale: perspective,
+    z: fz
+  };
+}
+
+// ====== DRAWING ======
+function drawGlow(sx, sy, radius, color, scale) {
+  const r = radius * scale * 2.5;
+  const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, r);
+  grad.addColorStop(0, color);
+  grad.addColorStop(1, 'transparent');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(sx, sy, r, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawBody(key, body, x, y, z) {
+  const p = project(x, y, z);
+  state.positions[key] = { x, y, z, sx: p.sx, sy: p.sy, scale: p.scale, zDepth: p.z, radius: body.radius };
+
+  // Glow
+  drawGlow(p.sx, p.sy, body.radius, body.glowColor, p.scale);
+
+  // Body sphere illusion
+  const r = body.radius * p.scale;
+  const grad = ctx.createRadialGradient(p.sx - r * 0.3, p.sy - r * 0.3, r * 0.1, p.sx, p.sy, r);
+
+  if (key === 'sun') {
+    grad.addColorStop(0, '#FFF8E0');
+    grad.addColorStop(0.5, '#FFD93D');
+    grad.addColorStop(1, '#CC8800');
+  } else if (key === 'earth') {
+    grad.addColorStop(0, '#6CB4EE');
+    grad.addColorStop(0.4, '#4A90D9');
+    grad.addColorStop(0.7, '#2E6B9E');
+    grad.addColorStop(1, '#1A3A5C');
+  } else if (key === 'moon') {
+    grad.addColorStop(0, '#E8E8EE');
+    grad.addColorStop(0.5, '#C0C0CC');
+    grad.addColorStop(1, '#808090');
+  } else if (key === 'mars') {
+    grad.addColorStop(0, '#F09060');
+    grad.addColorStop(0.5, '#D06030');
+    grad.addColorStop(1, '#802010');
+  } else if (key === 'mercury') {
+    grad.addColorStop(0, '#B8B8B8');
+    grad.addColorStop(0.5, '#8C7853');
+    grad.addColorStop(1, '#5C4B3A');
+  } else if (key === 'venus') {
+    grad.addColorStop(0, '#FFE4B5');
+    grad.addColorStop(0.5, '#FFC649');
+    grad.addColorStop(1, '#DAA520');
+  } else if (key === 'jupiter') {
+    grad.addColorStop(0, '#F5E6C3');
+    grad.addColorStop(0.5, '#D8CA9D');
+    grad.addColorStop(1, '#B8A67A');
+  } else if (key === 'saturn') {
+    grad.addColorStop(0, '#FFF8DC');
+    grad.addColorStop(0.5, '#FAD5A5');
+    grad.addColorStop(1, '#E6B86A');
+  } else if (key === 'uranus') {
+    grad.addColorStop(0, '#AEEEEE');
+    grad.addColorStop(0.5, '#4FD0E7');
+    grad.addColorStop(1, '#2E8B9A');
+  } else if (key === 'neptune') {
+    grad.addColorStop(0, '#A4C8F0');
+    grad.addColorStop(0.5, '#4B70DD');
+    grad.addColorStop(1, '#2E4A87');
+  }
+
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(p.sx, p.sy, r, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Selection ring
+  if (state.focused === key) {
+    ctx.strokeStyle = body.color;
+    ctx.lineWidth = 1.5;
+    ctx.globalAlpha = 0.5 + 0.2 * Math.sin(Date.now() * 0.003);
+    ctx.beginPath();
+    ctx.arc(p.sx, p.sy, r + 6 * p.scale, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+  }
+
+  // Label
+  if (state.showLabels && r > 2) {
+    ctx.font = `${Math.max(9, 11 * p.scale)}px 'Exo 2', sans-serif`;
+    ctx.fillStyle = `rgba(200,210,230,${Math.min(0.8, p.scale)})`;
+    ctx.textAlign = 'center';
+    ctx.fillText(body.name, p.sx, p.sy - r - 8 * p.scale);
+  }
+}
+
+function drawOrbit(cx, cy, cz, radius) {
+  if (!state.showOrbits) return;
+  ctx.strokeStyle = 'rgba(80,120,200,0.12)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  const steps = 80;
+  for (let i = 0; i <= steps; i++) {
+    const a = (i / steps) * Math.PI * 2;
+    const ox = cx + Math.cos(a) * radius;
+    const oz = cz + Math.sin(a) * radius;
+    const p = project(ox, cy, oz);
+    if (i === 0) ctx.moveTo(p.sx, p.sy);
+    else ctx.lineTo(p.sx, p.sy);
+  }
+  ctx.stroke();
+}
+
+// ====== ANIMATION LOOP ======
+let lastTime = 0;
+function animate(time) {
+  const dt = Math.min(time - (lastTime || time), 50);
+  lastTime = time;
+
+  // Smooth zoom
+  state.camDist += (state.targetCamDist - state.camDist) * 0.08;
+
+  // Update angles
+  for (const key in BODIES) {
+    const b = BODIES[key];
+    b.angle += b.speed * state.speedMul * (dt / 16);
+  }
+
+  // Clear
+  ctx.clearRect(0, 0, canvas.clientWidth, canvas.clientHeight);
+
+  // Compute positions and sort by depth
+  const renderList = [];
+  for (const key in BODIES) {
+    const b = BODIES[key];
+    let x, y = 0, z;
+    if (b.parent) {
+      const parent = BODIES[b.parent];
+      const px = Math.cos(parent.angle) * parent.orbitRadius;
+      const pz = Math.sin(parent.angle) * parent.orbitRadius;
+      x = px + Math.cos(b.angle) * b.orbitRadius;
+      z = pz + Math.sin(b.angle) * b.orbitRadius;
+      drawOrbit(px, 0, pz, b.orbitRadius);
+    } else {
+      x = Math.cos(b.angle) * b.orbitRadius;
+      z = Math.sin(b.angle) * b.orbitRadius;
+      if (b.orbitRadius > 0) drawOrbit(0, 0, 0, b.orbitRadius);
+    }
+    const p = project(x, y, z);
+    renderList.push({ key, body: b, x, y, z, zDepth: p.z });
+  }
+
+  // Sort back to front
+  renderList.sort((a, b) => b.zDepth - a.zDepth);
+  renderList.forEach(item => drawBody(item.key, item.body, item.x, item.y, item.z));
+
+  // Distance line if showing
+  updateDistanceTool();
+
+  requestAnimationFrame(animate);
+}
+
+// ====== INTERACTIONS ======
+canvas.addEventListener('mousedown', e => {
+  state.dragging = true;
+  state.lastMouse = { x: e.clientX, y: e.clientY };
+});
+canvas.addEventListener('mousemove', e => {
+  if (!state.dragging) return;
+  const dx = e.clientX - state.lastMouse.x;
+  const dy = e.clientY - state.lastMouse.y;
+  state.camAngleY += dx * 0.005;
+  state.camAngleX += dy * 0.005;
+  state.camAngleX = Math.max(-1.2, Math.min(1.2, state.camAngleX));
+  state.lastMouse = { x: e.clientX, y: e.clientY };
+});
+canvas.addEventListener('mouseup', () => state.dragging = false);
+canvas.addEventListener('mouseleave', () => state.dragging = false);
+
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  state.targetCamDist = Math.max(150, Math.min(800, state.targetCamDist + e.deltaY * 0.5));
+}, { passive: false });
+
+// Touch support
+canvas.addEventListener('touchstart', e => {
+  if (e.touches.length === 1) {
+    state.dragging = true;
+    state.lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+}, { passive: true });
+canvas.addEventListener('touchmove', e => {
+  if (!state.dragging || e.touches.length !== 1) return;
+  const dx = e.touches[0].clientX - state.lastMouse.x;
+  const dy = e.touches[0].clientY - state.lastMouse.y;
+  state.camAngleY += dx * 0.005;
+  state.camAngleX += dy * 0.005;
+  state.camAngleX = Math.max(-1.2, Math.min(1.2, state.camAngleX));
+  state.lastMouse = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+}, { passive: true });
+canvas.addEventListener('touchend', () => state.dragging = false);
+
+// Click to select
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = e.clientX - rect.left;
+  const my = e.clientY - rect.top;
+
+  let closest = null, closestDist = 30;
+  for (const key in state.positions) {
+    const p = state.positions[key];
+    const d = Math.hypot(mx - p.sx, my - p.sy);
+    const hitRadius = Math.max(15, p.radius * p.scale + 5);
+    if (d < hitRadius && d < closestDist) {
+      closest = key;
+      closestDist = d;
+    }
+  }
+  if (closest) focusPlanet(closest);
+});
+
+// ====== UI FUNCTIONS ======
+function focusPlanet(key) {
+  state.focused = key;
+  const body = BODIES[key];
+
+  // Update buttons
+  document.querySelectorAll('.planet-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-planet="${key}"]`)?.classList.add('active');
+
+  // Update info panel
+  document.getElementById('infoPlanetIcon').textContent = body.icon;
+  document.getElementById('infoPlanetName').textContent = body.name;
+  document.getElementById('infoPlanetDesc').textContent = body.desc;
+  document.getElementById('orbitalText').textContent = body.orbital;
+
+  const statsEl = document.getElementById('infoStats');
+  statsEl.innerHTML = body.stats.map(s => `
+    <div class="glass rounded-lg px-2 py-1.5 text-center">
+      <div style="font-family:'Exo 2',sans-serif; font-size:8px; color:rgba(160,180,220,0.5); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:2px;">${s.label}</div>
+      <div style="font-family:'Orbitron',sans-serif; font-size:11px; color:#c8d8ff; font-weight:600;">${s.value}</div>
+    </div>
+  `).join('');
+
+  // Zoom toward body
+  if (key === 'sun') state.targetCamDist = 250;
+  else if (key === 'moon') state.targetCamDist = 250;
+  else state.targetCamDist = 380;
+
+  // Re-animate info panel
+  const panel = document.getElementById('infoPanel');
+  panel.style.animation = 'none';
+  panel.offsetHeight;
+  panel.style.animation = 'slideUp 0.4s cubic-bezier(0.16,1,0.3,1) both';
+}
+
+function setSpeed(s) {
+  state.speedMul = s;
+  document.querySelectorAll('.speed-btn').forEach(b => {
+    b.classList.toggle('active-speed', parseFloat(b.dataset.speed) === s);
+  });
+}
+
+function toggleOrbits() { state.showOrbits = !state.showOrbits; }
+function toggleLabels() { state.showLabels = !state.showLabels; }
+
+function updateDistanceTool() {
+  const tool = document.getElementById('distanceTool');
+  const textEl = document.getElementById('distanceText');
+  if (state.focused === 'earth' || state.focused === 'mars') {
+    const ep = state.positions['earth'];
+    const mp = state.positions['mars'];
+    if (ep && mp) {
+      const dist3d = Math.hypot(ep.x - mp.x, ep.z - mp.z);
+      const realDist = (dist3d / 80 * 225).toFixed(0);
+      textEl.textContent = `Tierra ↔ Marte: ~${realDist}M km (simulado)`;
+      tool.style.display = 'flex';
+    }
+  } else {
+    tool.style.display = 'none';
+  }
+}
+
+// ====== ELEMENT SDK ======
+const defaultConfig = {
+  main_title: 'EXPLORADOR DEL SISTEMA SOLAR',
+  subtitle_text: 'Navega por el cosmos',
+  background_color: '#020412',
+  surface_color: '#0a1838',
+  text_color: '#c8d8ff',
+  primary_action_color: '#4A90D9',
+  secondary_action_color: '#8aa0cc',
+  font_family: 'Orbitron',
+  font_size: 14
+};
+
+function applyConfig(config) {
+  const c = { ...defaultConfig, ...config };
+  document.getElementById('mainTitle').textContent = c.main_title;
+  document.getElementById('subtitleText').textContent = c.subtitle_text;
+
+  // Colors
+  document.querySelector('.star-field').style.background = `radial-gradient(ellipse at 20% 50%, ${c.surface_color} 0%, ${c.background_color} 50%, #000 100%)`;
+
+  document.querySelectorAll('.glow-text').forEach(el => el.style.color = c.text_color);
+  document.querySelectorAll('.glass, .glass-bright').forEach(el => {
+    el.style.borderColor = `${c.primary_action_color}22`;
+  });
+  document.querySelectorAll('.speed-btn, #toggleOrbitsBtn, #toggleLabelsBtn').forEach(el => {
+    el.style.color = c.secondary_action_color;
+  });
+
+  // Fonts
+  const fontStack = `${c.font_family}, 'Orbitron', sans-serif`;
+  const bodyStack = `'Exo 2', sans-serif`;
+  document.getElementById('mainTitle').style.fontFamily = fontStack;
+  document.getElementById('mainTitle').style.fontSize = c.font_size + 'px';
+  document.getElementById('infoPlanetName').style.fontFamily = fontStack;
+  document.getElementById('infoPlanetName').style.fontSize = (c.font_size * 1.3) + 'px';
+  document.getElementById('subtitleText').style.fontFamily = bodyStack;
+  document.getElementById('subtitleText').style.fontSize = (c.font_size * 0.72) + 'px';
+  document.getElementById('infoPlanetDesc').style.fontSize = (c.font_size * 0.78) + 'px';
+}
+
+// ====== START ======
+lucide.createIcons();
+applyConfig(defaultConfig);
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>

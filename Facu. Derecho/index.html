@@ -1,0 +1,335 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f4b31b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Libertad y Cambio">
+  <title>Libertad y Cambio | Inicio</title>
+  <link rel="icon" type="image/png" href="imagen/favicon-libertad-cambio.png">
+  <link rel="apple-touch-icon" href="imagen/app-icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="prototype-page" id="top">
+    <div class="toast" data-toast hidden role="status" aria-live="polite"></div>
+
+    <section class="hero-slider" aria-label="Presentacion principal">
+      <header class="site-header">
+        <a class="brand" href="#top" aria-label="Volver al inicio">
+          <img class="brand-logo" src="imagen/logo-libertad-cambio-nuevo-recortado.png" alt="Logo de Libertad y Cambio">
+        </a>
+
+        <nav class="site-nav" aria-label="Navegacion principal">
+          <div class="nav-links">
+            <a class="nav-link is-active" href="#top">Inicio</a>
+            <a class="nav-link" href="#about">Nosotros</a>
+            <a class="nav-link" href="biblioteca.html">Biblioteca</a>
+            <a class="nav-link" href="#charlas">Charlas</a>
+            <a class="nav-link" href="#propuestas">Propuestas</a>
+            <a class="nav-link" href="donde-voto.html">Dónde voto</a>
+            <a class="nav-link" href="#info">Info</a>
+            <a class="nav-link" href="admin.html" data-admin-only hidden>Admin</a>
+          </div>
+
+          <div class="nav-actions">
+            <button class="install-app-button" type="button" data-install-app hidden>Instalar app</button>
+            <button class="login-button" type="button" data-login-button>Iniciar sesión</button>
+          </div>
+        </nav>
+      </header>
+
+
+
+      <div class="slides">
+        <article class="slide is-active" data-slide style="--slide-image: url('imagen/IMG_2986.PNG');">
+          <div class="slide-copy">
+            <p class="slide-kicker">Quienes somos</p>
+            <h1>Libertad<br>y cambio</h1>
+            <p class="slide-description">
+              Somos una nueva generación de estudiantes que creen en las ideas de la libertad.
+              Estamos en la facultad para ayudarte.
+            </p>
+            <a class="hero-button" href="#about">Conocenos</a>
+          </div>
+        </article>
+
+        <article class="slide" data-slide style="--slide-image: url('imagen/IMG_2988.PNG');">
+          <div class="slide-copy">
+            <p class="slide-kicker">Biblioteca</p>
+            <h1>Aula<br>virtual</h1>
+            <p class="slide-description">
+              Un espacio para ordenar materiales, apuntes y recursos utiles para cursar mejor.
+            </p>
+            <a class="hero-button" href="biblioteca.html">Ir a biblioteca</a>
+          </div>
+        </article>
+
+        <article class="slide" data-slide style="--slide-image: url('imagen/charlas-eventos.jpeg');">
+          <div class="slide-copy">
+            <p class="slide-kicker">Charlas y eventos</p>
+            <h1>Charlas<br>y eventos</h1>
+            <p class="slide-description">
+              Charlas y clases que te ayudan a cursar y rendir mejor.
+            </p>
+            <a class="hero-button" href="#charlas">Ver charlas</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="hero-controls">
+        <button class="arrow-button prev" type="button" aria-label="Slide anterior" data-prev>
+          <span aria-hidden="true">&#10094;</span>
+        </button>
+        <button class="arrow-button next" type="button" aria-label="Slide siguiente" data-next>
+          <span aria-hidden="true">&#10095;</span>
+        </button>
+      </div>
+
+      <div class="slide-dots" aria-label="Selector de slides">
+        <button class="dot is-active" type="button" aria-label="Ir al slide 1" data-dot="0"></button>
+        <button class="dot" type="button" aria-label="Ir al slide 2" data-dot="1"></button>
+        <button class="dot" type="button" aria-label="Ir al slide 3" data-dot="2"></button>
+      </div>
+    </section>
+
+    <section class="content-section about-section" id="about">
+      <div class="about-copy">
+        <span class="section-label">Nosotros</span>
+        <h2>Libertad y Cambio</h2>
+        <p>
+          Nosotros nacimos por el hartazgo de ver siempre a los mismos en la UNT haciendo la vieja
+          política de siempre, que no resuelve nada y encima es cero transparente. Vinimos a
+          modernizar eso.
+        </p>
+        <p>
+          Laburamos en dos frentes: por un lado, la "batalla cultural", donde armamos charlas,
+          convenios con empresas y nos plantamos en debates fuertes, como cuando nos opusimos a las
+          tomas. Y por otro, la militancia del día a día, que es dar una mano en los grupos de
+          WhatsApp, estar en las mesas libres o en los ingresos en 25 de Mayo o la Quinta.
+        </p>
+        <p>
+          Lo mejor es que el tiempo lo manejás vos según tus clases; te ponés la remera cuando podés
+          y ayudás desde donde te quede cómodo.
+        </p>
+        <div class="social-links" aria-label="Redes sociales de Libertad y Cambio">
+          <a class="social-link" href="https://www.instagram.com/libertadycambio.derecho/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5"></rect>
+              <circle cx="12" cy="12" r="4"></circle>
+              <circle cx="17.5" cy="6.5" r="1.2"></circle>
+            </svg>
+            <span>Instagram</span>
+          </a>
+          <a class="social-link" href="https://chat.whatsapp.com/KmiGUScCoAKIYLHdDQJHDX?s=sw&amp;p=i&amp;ilr=0" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.5 11.8a8.4 8.4 0 0 1-12.4 7.4l-4.1 1.1 1.1-4a8.4 8.4 0 1 1 15.4-4.5Z"></path>
+              <path d="M9.3 8.1c.2-.4.4-.4.7-.4h.5c.2 0 .4.1.5.4l.7 1.7c.1.3 0 .5-.2.7l-.4.5c-.1.1-.2.3-.1.5.4.8 1.3 1.7 2.3 2.2.2.1.3.1.5-.1l.6-.7c.2-.2.4-.2.7-.1l1.6.8c.3.1.4.3.4.6 0 .7-.5 1.5-1.1 1.7-.6.3-2.7.4-5.1-1.8-2.1-1.9-2.9-4-2.8-4.8.1-.7.4-1.3.7-1.8Z"></path>
+            </svg>
+            <span>WhatsApp</span>
+          </a>
+          <a class="social-link" href="https://www.tiktok.com/@libertadycambio.unt?is_from_webapp=1&amp;sender_device=pc" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14.5 3v11.1a4.4 4.4 0 1 1-4.4-4.4"></path>
+              <path d="M14.5 5.7c1 2.3 2.7 3.6 5.2 3.8"></path>
+            </svg>
+            <span>TikTok</span>
+          </a>
+          <a class="social-link" href="https://x.com/libertaycambio?s=21" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m4 4 16 16"></path>
+              <path d="M20 4 4 20"></path>
+            </svg>
+            <span>X</span>
+          </a>
+          <a class="social-link" href="https://www.facebook.com/share/1BNoRJGbJR/" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M14 8h2.3V4.4c-.4-.1-1.8-.2-3.4-.2-3.4 0-5.7 2-5.7 5.8v3.2H4v4h3.2V22h4.1v-4.8h3.2l.5-4h-3.7V10.4c0-1.2.3-2.4 2.7-2.4Z"></path>
+            </svg>
+            <span>Facebook</span>
+          </a>
+        </div>
+      </div>
+      
+
+      <div class="about-visual">
+        <img src="imagen/IMG_2985.PNG" alt="Equipo de Libertad y Cambio en la facultad" loading="lazy" decoding="async">
+      </div>
+    </section>
+
+    <section class="content-section events-section" id="charlas">
+      <div class="section-intro">
+        <span class="section-label">Charlas y eventos</span>
+        <h2>Actividades para cursar y rendir mejor</h2>
+        <p>
+          Charlas, clases y encuentros pensados para acompañarte durante la cursada.
+          El contador de charlas lo agregamos cuando me pases el diseño.
+        </p>
+        <button class="hero-button section-button" type="button" data-coming-soon>Mas informacion</button>
+      </div>
+
+      <div class="events-visual">
+        <img src="imagen/charlas-eventos.jpeg" alt="Charla y evento de Libertad y Cambio" loading="lazy" decoding="async">
+      </div>
+    </section>
+
+    <section class="content-section proposals-section" id="propuestas">
+      <div class="proposal-copy">
+        <span class="proposal-emblem" aria-hidden="true">
+          <img src="imagen/logo-donde-votas.png" alt="" loading="lazy" decoding="async">
+        </span>
+        <span class="section-label">Propuestas</span>
+        <h2 class="proposal-stair">
+          <span>Del decir</span>
+          <span>al hacer</span>
+        </h2>
+        <div class="proposal-subbrand">
+          <strong>centro y consejo</strong>
+          <img src="imagen/favicon-libertad-cambio.png" alt="Libertad y Cambio" loading="lazy" decoding="async">
+        </div>
+        <p>
+          Más espacios para estudiar. Mesas más justas para rendir. Una Facultad que acompañe.
+          Este 6 de mayo, Libertad y Cambio.
+        </p>
+        <div class="proposal-actions">
+          <button class="proposal-action" type="button" data-proposal-prev aria-label="Propuesta anterior">&#10094;</button>
+          <button class="proposal-action" type="button" data-proposal-next aria-label="Propuesta siguiente">&#10095;</button>
+        </div>
+      </div>
+
+      <div class="proposal-stage" aria-label="Carrusel de propuestas">
+        <div class="proposal-track" data-proposal-track>
+          <article class="proposal-card is-active" data-proposal-slide>
+            <img src="imagen/propuestas/candidatos-centro.jpeg" alt="Candidatos de Libertad y Cambio al centro" loading="lazy" decoding="async">
+          </article>
+
+          <article class="proposal-card" data-proposal-slide>
+            <img src="imagen/propuestas/candidatos-consejo.jpeg" alt="Candidatos de Libertad y Cambio al consejo" loading="lazy" decoding="async">
+          </article>
+
+          <article class="proposal-card" data-proposal-slide>
+            <img src="imagen/propuestas/transparencia-consejo.jpeg" alt="Propuesta de transparencia en el consejo" loading="lazy" decoding="async">
+          </article>
+
+          <article class="proposal-card" data-proposal-slide>
+            <img src="imagen/propuestas/convenios-sector-privado.jpeg" alt="Propuesta de convenios con el sector privado" loading="lazy" decoding="async">
+          </article>
+
+          <article class="proposal-card" data-proposal-slide>
+            <img src="imagen/propuestas/bono-opcional.jpeg" alt="Propuesta de bono verdaderamente opcional" loading="lazy" decoding="async">
+          </article>
+        </div>
+
+        <div class="proposal-dots" aria-label="Selector de propuestas">
+          <button class="proposal-dot is-active" type="button" aria-label="Ir a propuesta 1" data-proposal-dot="0"></button>
+          <button class="proposal-dot" type="button" aria-label="Ir a propuesta 2" data-proposal-dot="1"></button>
+          <button class="proposal-dot" type="button" aria-label="Ir a propuesta 3" data-proposal-dot="2"></button>
+          <button class="proposal-dot" type="button" aria-label="Ir a propuesta 4" data-proposal-dot="3"></button>
+          <button class="proposal-dot" type="button" aria-label="Ir a propuesta 5" data-proposal-dot="4"></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-section benefits-section" id="beneficios">
+      <div class="section-intro">
+        <span class="section-label">Vouchers y eventos</span>
+        <h2>Beneficios concretos para estudiantes</h2>
+        <p>
+          Trabajamos para acercarte beneficios concretos: descuentos en fotocopias, acceso a
+          material de estudio y oportunidades de formación.
+        </p>
+      </div>
+
+      <div class="design-layout">
+        <article class="design-note">
+          <h3>Fotocopias</h3>
+          <p>Descuentos y herramientas para que estudiar sea un poco más accesible.</p>
+        </article>
+
+        <article class="design-note">
+          <h3>Material de estudio</h3>
+          <p>Acceso a recursos útiles para cursar, preparar parciales y organizar la carrera.</p>
+        </article>
+
+        <article class="design-note">
+          <h3>Formación</h3>
+          <p>Actividades, eventos y oportunidades para seguir aprendiendo dentro de la facultad.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="content-section" id="info">
+      <div class="section-intro">
+        <span class="section-label">Info</span>
+        <h2>Información útil en un solo lugar</h2>
+        <p>
+          Accesos rápidos para consultar la biblioteca, el lugar de votación y las novedades
+          importantes de Libertad y Cambio.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <img src="imagen/IMG_2988.PNG" alt="Acceso desde celular para estudiantes" loading="lazy" decoding="async">
+          <div class="feature-copy">
+            <h3>Web app</h3>
+            <p>La página está pensada para funcionar bien desde el celular y poder instalarse como app.</p>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <img src="imagen/IMG_2984.PNG" alt="Jornada de votacion estudiantil" loading="lazy" decoding="async">
+          <div class="feature-copy">
+            <h3>Dónde voto</h3>
+            <p>Consultá tu mesa, aula y sede de votación desde la página preparada para futuras elecciones.</p>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <img src="imagen/IMG_2987.PNG" alt="Equipo de Libertad y Cambio" loading="lazy" decoding="async">
+          <div class="feature-copy">
+            <h3>Panel y biblioteca</h3>
+            <p>El equipo puede cargar materiales por materia, optativa o recurso desde el panel de administración.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="login-overlay" data-login-modal hidden>
+    <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="login-title">
+      <button class="login-close" type="button" aria-label="Cerrar inicio de sesión" data-login-close>&times;</button>
+      <p class="login-kicker" data-login-kicker>Acceso estudiantes</p>
+      <h2 id="login-title" data-login-title>Ingresar DNI</h2>
+      <p class="login-copy" data-login-copy>
+        Usá tu DNI sin puntos ni espacios para entrar con los datos del padrón.
+      </p>
+      <div class="login-mode-switch" aria-label="Tipo de acceso">
+        <button class="is-active" type="button" data-login-mode-option="student">Estudiante</button>
+        <button type="button" data-login-mode-option="admin">Administrador</button>
+      </div>
+
+      <form class="login-form" data-login-form>
+        <label for="login-dni" data-login-label>DNI</label>
+        <input id="login-dni" name="dni" type="text" inputmode="numeric" autocomplete="off" maxlength="8" placeholder="12345678" data-login-dni>
+        <button type="submit">Entrar</button>
+        <p class="login-status" data-login-status></p>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+

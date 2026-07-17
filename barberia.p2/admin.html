@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Panel del Barbero</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0b0f14] text-white font-sans">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-40 backdrop-blur bg-[#0b0f14]/70 border-b border-white/5">
+    <div class="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
+      <span class="font-display text-lg font-bold">💈 Panel del Barbero</span>
+      <a href="index.html" class="text-sm text-white/70 hover:text-white">← Volver al sitio</a>
+    </div>
+  </header>
+
+  <!-- Turnos -->
+  <section class="mx-auto max-w-6xl px-4 py-10">
+    <h2 class="text-2xl font-bold mb-6">Turnos pendientes</h2>
+    <div id="tablaTurnos" class="bg-[#10161d] rounded-2xl shadow p-4 border border-white/5 overflow-x-auto">
+      <table class="w-full text-sm text-left">
+        <thead class="text-white/60 border-b border-white/10">
+          <tr>
+            <th class="py-2">Fecha</th>
+            <th class="py-2">Hora</th>
+            <th class="py-2">Servicio</th>
+            <th class="py-2">Cliente</th>
+            <th class="py-2">Estado</th>
+            <th class="py-2">Acción</th>
+          </tr>
+        </thead>
+        <tbody id="turnosBody" class="divide-y divide-white/10"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Chat -->
+  <section class="mx-auto max-w-6xl px-4 py-10">
+    <h2 class="text-2xl font-bold mb-6">Chat con clientes</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Lista de conversaciones -->
+      <div class="bg-[#10161d] rounded-2xl shadow p-4 border border-white/5">
+        <h3 class="text-lg font-semibold mb-3">Conversaciones</h3>
+        <ul id="listaChats" class="space-y-2"></ul>
+      </div>
+      <!-- Mensajes -->
+      <div class="bg-[#10161d] rounded-2xl shadow flex flex-col border border-white/5">
+        <div id="chatAdminBox" class="flex-1 p-4 overflow-y-auto space-y-2 text-[15px]"></div>
+        <div class="p-3 border-t border-white/10 flex items-center gap-2">
+          <input id="chatAdminInput" class="flex-1 px-3 py-2 rounded-xl bg-black/20 border border-white/10" placeholder="Escribir..." />
+          <button id="chatAdminSend" class="px-4 py-2 rounded-xl bg-blue-500 hover:brightness-110">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Turnos demo
+    const turnos = [
+      {id:1, fecha:"2025-08-29", hora:"09:20", servicio:"Corte Clásico", cliente:"Cliente 1", estado:"Pendiente"},
+      {id:2, fecha:"2025-08-29", hora:"11:00", servicio:"Barba & Afeitado", cliente:"Cliente 2", estado:"Pendiente"},
+    ];
+
+    function renderTurnos(){
+      const body = document.getElementById("turnosBody");
+      body.innerHTML = "";
+      turnos.forEach(t=>{
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="py-2">${t.fecha}</td>
+          <td>${t.hora}</td>
+          <td>${t.servicio}</td>
+          <td>${t.cliente}</td>
+          <td class="font-semibold ${t.estado==='Aceptado'?'text-green-400': t.estado==='Rechazado'?'text-red-400':'text-yellow-400'}">${t.estado}</td>
+          <td>
+            ${t.estado==="Pendiente" ? `
+              <button onclick="cambiarEstado(${t.id},'Aceptado')" class="px-2 py-1 bg-green-600 rounded">Aceptar</button>
+              <button onclick="cambiarEstado(${t.id},'Rechazado')" class="px-2 py-1 bg-red-600 rounded ml-2">Rechazar</button>
+            ` : "—"}
+          </td>
+        `;
+        body.appendChild(row);
+      });
+    }
+    function cambiarEstado(id, nuevoEstado){
+      const t = turnos.find(x=>x.id===id);
+      if(t){ t.estado = nuevoEstado; renderTurnos(); }
+    }
+    renderTurnos();
+
+    //  Chat demo
+    const chats = {
+      "Cliente 1":[{from:"Cliente 1", text:"Hola, ¿puedo reservar para mañana?"}],
+      "Cliente 2":[{from:"Cliente 2", text:"¿Tienen disponibilidad a las 11?"}]
+    };
+    let currentChat = null;
+
+    function renderListaChats(){
+      const ul = document.getElementById("listaChats");
+      ul.innerHTML = "";
+      Object.keys(chats).forEach(cliente=>{
+        const li = document.createElement("li");
+        li.innerHTML = `<button class="w-full text-left px-3 py-2 rounded hover:bg-white/10">${cliente}</button>`;
+        li.querySelector("button").addEventListener("click",()=>{currentChat=cliente; renderChat();});
+        ul.appendChild(li);
+      });
+    }
+
+    function renderChat(){
+      const box = document.getElementById("chatAdminBox");
+      box.innerHTML = "";
+      if(!currentChat){ box.innerHTML="<p class='text-white/60'>Seleccioná un cliente.</p>"; return;}
+      chats[currentChat].forEach(m=>{
+        const div = document.createElement("div");
+        const mine = m.from==="Barbero";
+        div.className = "max-w-[80%] " + (mine ? "ml-auto" : "mr-auto");
+        div.innerHTML = `<div class="px-3 py-2 rounded-xl ${mine?"bg-blue-500/30":"bg-white/10"}">${m.text}</div>`;
+        box.appendChild(div);
+      });
+      box.scrollTop = box.scrollHeight;
+    }
+
+    document.getElementById("chatAdminSend").addEventListener("click",()=>{
+      const input=document.getElementById("chatAdminInput");
+      if(input.value && currentChat){
+        chats[currentChat].push({from:"Barbero", text:input.value});
+        input.value="";
+        renderChat();
+      }
+    });
+
+    renderListaChats();
+    renderChat();
+  </script>
+</body>
+</html>
