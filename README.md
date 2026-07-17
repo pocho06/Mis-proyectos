@@ -53,4 +53,4 @@ Los proyectos puramente estáticos pueden abrirse desde su archivo `index.html`.
 
 ## Autor
 
-Desarrollado por Fabricio.
+Desarrollado por Fabricio Poccioni.
